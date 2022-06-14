@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="欢迎来到我的个人网站,今天给大家带来的是《基于selenium库实现的宁夏高考志愿分数统计》 成果展示区 🌻 V2.0版本更新内容 (update_time:2022&#x2F;6&#x2F;14 22:00)     在1.0版本中,我们将繁多的数据转换为了 : 同一院校三年以来招生分数的表格   在2.0版本中,我们添加了每一年的排名,解决了考试难度不一导致的误差。增加了投档人数统计,让大家看到各院校的招生名额">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NingXia volunteer score statistics based on selenium">
+<meta property="og:url" content="https://github.com/huang-chip/huang-chip.github.io/2022/06/13/NingXia-volunteer-score-statistics-based-on-selenium/index.html">
+<meta property="og:site_name" content="大黄之领域">
+<meta property="og:description" content="欢迎来到我的个人网站,今天给大家带来的是《基于selenium库实现的宁夏高考志愿分数统计》 成果展示区 🌻 V2.0版本更新内容 (update_time:2022&#x2F;6&#x2F;14 22:00)     在1.0版本中,我们将繁多的数据转换为了 : 同一院校三年以来招生分数的表格   在2.0版本中,我们添加了每一年的排名,解决了考试难度不一导致的误差。增加了投档人数统计,让大家看到各院校的招生名额">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f33b.png?v8">
+<meta property="og:image" content="https://www.helloimg.com/images/2022/06/14/ZSCGaM.png">
+<meta property="og:image" content="https://www.helloimg.com/images/2022/06/14/ZSCFGn.png">
+<meta property="og:image" content="https://www.helloimg.com/images/2022/06/14/ZSCPAR.png">
+<meta property="og:image" content="https://www.helloimg.com/images/2022/06/13/ZLKrmt.png">
+<meta property="og:image" content="https://www.helloimg.com/images/2022/06/13/ZLKVcu.png">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f33b.png?v8">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f33b.png?v8">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/2665.png?v8">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/2665.png?v8">
+<meta property="article:published_time" content="2022-06-13T09:55:56.000Z">
+<meta property="article:modified_time" content="2022-06-14T15:22:57.177Z">
+<meta property="article:author" content="黄鑫远">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f33b.png?v8">
+
+<link rel="canonical" href="https://github.com/huang-chip/huang-chip.github.io/2022/06/13/NingXia-volunteer-score-statistics-based-on-selenium/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NingXia volunteer score statistics based on selenium | 大黄之领域</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">大黄之领域</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/huang-chip/huang-chip.github.io/2022/06/13/NingXia-volunteer-score-statistics-based-on-selenium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="黄鑫远">
+      <meta itemprop="description" content="111喜欢我的博客吗">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大黄之领域">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NingXia volunteer score statistics based on selenium
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-13 17:55:56" itemprop="dateCreated datePublished" datetime="2022-06-13T17:55:56+08:00">2022-06-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-14 23:22:57" itemprop="dateModified" datetime="2022-06-14T23:22:57+08:00">2022-06-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="欢迎来到我的个人网站-今天给大家带来的是《基于selenium库实现的宁夏高考志愿分数统计》"><a href="#欢迎来到我的个人网站-今天给大家带来的是《基于selenium库实现的宁夏高考志愿分数统计》" class="headerlink" title="欢迎来到我的个人网站,今天给大家带来的是《基于selenium库实现的宁夏高考志愿分数统计》"></a><center>欢迎来到我的个人网站,今天给大家带来的是《基于selenium库实现的宁夏高考志愿分数统计》</center></h2><ul>
+<li><h2 id="成果展示区-sunflower"><a href="#成果展示区-sunflower" class="headerlink" title="成果展示区 :sunflower:"></a><center>成果展示区 <span class="github-emoji"><span>🌻</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f33b.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span></center></h2><blockquote>
+<p>V2.0版本更新内容 (update_time:2022/6/14 22:00)</p>
+</blockquote>
+<div align="center">
+  <p>在1.0版本中,我们将繁多的数据转换为了 : 同一院校三年以来招生分数的表格</p>
+  <p>在2.0版本中,我们添加了每一年的排名,解决了考试难度不一导致的误差。增加了投档人数统计,让大家看到各院校的招生名额、发现捡漏机会。</p>
+  <p>另外一个重大更新是: 我将过去5年文科理科一分段表整理成了图表,可以看到每一年高考 各分数段以上人数分布,方便高中老师查看,也适用于准高三学生找准自己的战略定位和目标。</p>
+  <hr>
+  <p>成果截图 - 理科一本投档分数表 (局部)</p>    
+  <img src="https://www.helloimg.com/images/2022/06/14/ZSCGaM.png">
+  <p>理科2017-2021年一分段数据对比(局部)</p>
+  <img src="https://www.helloimg.com/images/2022/06/14/ZSCFGn.png">
+  <p>理科2017-2021年分数段以上人数-数据可视化</p>
+  <img src="https://www.helloimg.com/images/2022/06/14/ZSCPAR.png">
+  <hr>
+</div></li>
+</ul>
+<blockquote>
+<p>V1.0版本内容概览 (update_time:2022/6/13)</p>
+</blockquote>
+<div align="center">
+    <img src="https://www.helloimg.com/images/2022/06/13/ZLKrmt.png" width="70%">
+    <p>官网格式 VS 我的程序运行结果(V1.0版本)</p>
+    <img src="https://www.helloimg.com/images/2022/06/13/ZLKVcu.png" width="70%">
+</div>  
+
+<hr>
+<p><span class="github-emoji"><span>🌻</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f33b.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span> 点击下方链接可以下载excel结果,祝大家都能选到心仪的学校和专业 <span class="github-emoji"><span>🌻</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f33b.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>    </p>
+<blockquote>
+<p>如果您在电脑端查看的话,建议下载如下zip文件:<br><a href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E4%B8%80%E5%88%86%E4%B8%80%E6%AE%B5%E8%A1%A8%E6%89%93%E5%8C%85%E6%96%87%E4%BB%B6.zip" target="_blank">一分段表打包文件</a><br><a href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E5%BF%97%E6%84%BF%E4%BF%A1%E6%81%AF%2B%E4%B8%80%E5%88%86%E6%AE%B5%E8%A1%A8%28%E6%96%87%E7%90%86%E7%A7%91%E9%80%9A%E7%94%A8%29.zip" target="_blank">投档信息+一分段表打包文件</a><br><a href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E9%99%A2%E6%A0%A1%E5%90%8D%2B%E6%AF%8F%E5%B9%B4%E5%A1%AB%E6%8A%A5%E5%88%86%E6%95%B0%28%E6%96%87%E7%90%86%E7%A7%91%E9%80%9A%E7%94%A8%29%28%E7%AE%80%E7%BA%A6%E7%89%88%E6%9C%AC%29.zip" target="_blank">简约版投档信息(V1.0旧版本文件)</a>  </p>
+</blockquote>
+<blockquote>
+<p>手机端查看-文科生  </p>
+<table>
+<thead>
+<tr>
+<th>文件名称(文科)</th>
+<th>下载链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文史一本-近三年投档信息&amp;一分段表</td>
+<td><strong><a target="_blank" rel="noopener" href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E6%96%87%E5%8F%B2%E4%B8%80%E6%9C%AC%2B%E4%B8%80%E5%88%86%E6%AE%B5%E8%A1%A8%282019-2021%29.xlsx">点击下载—文史一本-近三年投档信息&amp;一分段表</a></strong></td>
+</tr>
+<tr>
+<td>文史二本-近三年投档信息&amp;一分段表</td>
+<td><strong><a target="_blank" rel="noopener" href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E6%96%87%E5%8F%B2%E4%BA%8C%E6%9C%AC%2B%E4%B8%80%E5%88%86%E6%AE%B5%E8%A1%A8%282019-2021%29.xlsx">点击下载—文史二本-近三年投档信息&amp;一分段表</a></strong></td>
+</tr>
+<tr>
+<td>文科近五年一分段表汇总</td>
+<td><strong><a target="_blank" rel="noopener" href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E6%96%87%E7%A7%91%E4%B8%80%E5%88%86%E4%B8%80%E6%AE%B5%E8%A1%A8%282021-2017%29ProMax%E6%9C%80%E7%BB%88%E6%95%B4%E5%90%88%E7%89%88%E6%9C%ACv2.0.xlsx">点击下载—文科近五年一分段表汇总</a></strong></td>
+</tr>
+</tbody></table>
+</blockquote>
+<blockquote>
+<p>手机端查看-理科生  </p>
+<table>
+<thead>
+<tr>
+<th>文件名称(理科)</th>
+<th>下载链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>理工一本-近三年投档信息&amp;一分段表</td>
+<td><strong><a target="_blank" rel="noopener" href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E7%90%86%E5%B7%A5%E4%B8%80%E6%9C%AC%2B%E4%B8%80%E5%88%86%E6%AE%B5%E8%A1%A8%282019-2021%29.xlsx">点击下载—理工一本-近三年投档信息&amp;一分段表</a></strong></td>
+</tr>
+<tr>
+<td>理工二本-近三年投档信息&amp;一分段表</td>
+<td><strong><a target="_blank" rel="noopener" href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E7%90%86%E5%B7%A5%E4%BA%8C%E6%9C%AC%2B%E4%B8%80%E5%88%86%E6%AE%B5%E8%A1%A8%282019-2021%29.xlsx">点击下载—理工二本-近三年投档信息&amp;一分段表</a></strong></td>
+</tr>
+<tr>
+<td>理工近五年一分段表汇总</td>
+<td><strong><a target="_blank" rel="noopener" href="http://rdf1yib3f.hn-bkt.clouddn.com/GaoKaoZhiYuan/%E7%90%86%E7%A7%91%E4%B8%80%E5%88%86%E4%B8%80%E6%AE%B5%E8%A1%A8%282021-2017%29ProMax%E6%9C%80%E7%BB%88%E7%89%88.xlsx">点击下载—理工近五年一分段表汇总</a></strong></td>
+</tr>
+</tbody></table>
+</blockquote>
+<hr>
+<ul>
+<li><h2 id="程序设计思路"><a href="#程序设计思路" class="headerlink" title="程序设计思路"></a><center>程序设计思路</center></h2><blockquote>
+<ol>
+<li>首先是确认目标网站，我们选取的是 <a target="_blank" rel="noopener" href="https://www.nxjyks.cn/contents/PTGK/" title="普通高考-宁夏教育考试院">宁夏教育考试院</a> 的官方数据。</li>
+<li>面对如此多的文章，一个一个获取链接未免过于麻烦，于是，我们第一步就需要获取网站的文章列表 ( 包含文章标题和链接 )<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="comment">#经过爬取文章链接,筛选过后,会得到这样的信息:</span></span><br><span class="line">&gt;{<span class="string">'2021年宁夏普通高校招生高职(专科)院校理工类投档信息'</span>: <span class="string">'https://www.nxjyks.cn/contents/PTGK/2021/08/20210809123959000.html'</span>, </span><br><span class="line">&gt;<span class="string">'2021年宁夏普通高校招生高职(专科)院校文史类投档信息'</span>: <span class="string">'https://www.nxjyks.cn/contents/PTGK/2021/08/20210809123945000.html'</span>}</span><br></pre></td></tr></tbody></table></figure></li>
+<li>得到文章列表以后,我们可以直接获取里面的内容,由于每个学校的信息用一个空白行分割开来,于是我们可以将每个学校的投档信息分别保存<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="comment">#每个学校的信息(txt内容示例):</span></span><br><span class="line">&gt;[<span class="number">3120</span>]上海理工大学计划数：<span class="number">68</span>已投数：<span class="number">71</span>已投考生最低分数：<span class="number">490.</span>&gt;<span class="number">170099107</span> </span><br><span class="line">&gt;[<span class="number">3124</span>]华东政法大学计划数：<span class="number">10</span>已投数：<span class="number">10</span>已投考生最低分数：<span class="number">545.216104100</span></span><br><span class="line">&gt;<span class="comment">#可以看到每一条信息都是一个字符串,这样方便我们后期处理</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li>信息合并工作,用split方法将许多的字符转换为列表后,用学校代码作为唯一查找方式,院校的2021-2019投档分数单独算作一项,于是我们得到了如下结果<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="comment">#每个学校的投档信息-&gt;转换为列表(list内容示例):</span></span><br><span class="line">&gt;<span class="comment">#[学校代码 , 学校名称 , 2021,2020,2019 年最低投档分数]</span></span><br><span class="line">&gt;[<span class="string">'3120'</span>, <span class="string">'上海理工大学'</span>, <span class="number">468</span>, <span class="number">490</span>, <span class="number">490</span>]</span><br><span class="line">&gt;[<span class="string">'3124'</span>, <span class="string">'华东政法大学'</span>, <span class="number">536</span>, <span class="number">545</span>, <span class="number">561</span>]</span><br><span class="line">&gt;[<span class="string">'3520'</span>, <span class="string">'华侨大学'</span>, <span class="number">413</span>, <span class="string">'null'</span>, <span class="string">'null'</span>]<span class="comment">#没有招生的年份,内容为'null'</span></span><br><span class="line">&gt;<span class="comment">#每一条信息都是一个列表,这样方便我们表格的写入</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<hr>
+<center><span class="github-emoji"><span>♥</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/2665.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>  感谢阅读,点击上方链接可以下载excel文档,祝大家都能选到心仪的学校和专业 <span class="github-emoji"><span>♥</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/2665.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>  
+</center>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/13/study-C/" rel="prev" title="study_C#">
+      <i class="fa fa-chevron-left"></i> study_C#
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/06/14/Save-Some-Information/" rel="next" title="Save_Some_Information">
+      Save_Some_Information <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%88%91%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E4%BB%8A%E5%A4%A9%E7%BB%99%E5%A4%A7%E5%AE%B6%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%98%AF%E3%80%8A%E5%9F%BA%E4%BA%8Eselenium%E5%BA%93%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%AE%81%E5%A4%8F%E9%AB%98%E8%80%83%E5%BF%97%E6%84%BF%E5%88%86%E6%95%B0%E7%BB%9F%E8%AE%A1%E3%80%8B"><span class="nav-number">1.</span> <span class="nav-text">欢迎来到我的个人网站,今天给大家带来的是《基于selenium库实现的宁夏高考志愿分数统计》</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E6%9E%9C%E5%B1%95%E7%A4%BA%E5%8C%BA-sunflower"><span class="nav-number">2.</span> <span class="nav-text">成果展示区 🌻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="nav-number">3.</span> <span class="nav-text">程序设计思路</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">黄鑫远</p>
+  <div class="site-description" itemprop="description">111喜欢我的博客吗</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄鑫远</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

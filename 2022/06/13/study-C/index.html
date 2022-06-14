@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"github.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="基础知识    C#的多行注释是&#x2F;**&#x2F;    单行注释是&#x2F;&#x2F; (必不可少)在任何 C# 程序中的第一条语句都是：using System; 标识符必须以字母、下划线或 @开头,且大小写敏感,注意: @if 是有效的标识符，但 if 不是，因为 if 是关键字  C#的数据类型(三种:)   值类型（Value types）就是我们常见的bool, int , float , char.都可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="study_C#">
+<meta property="og:url" content="https://github.com/huang-chip/huang-chip.github.io/2022/06/13/study-C/index.html">
+<meta property="og:site_name" content="大黄之领域">
+<meta property="og:description" content="基础知识    C#的多行注释是&#x2F;**&#x2F;    单行注释是&#x2F;&#x2F; (必不可少)在任何 C# 程序中的第一条语句都是：using System; 标识符必须以字母、下划线或 @开头,且大小写敏感,注意: @if 是有效的标识符，但 if 不是，因为 if 是关键字  C#的数据类型(三种:)   值类型（Value types）就是我们常见的bool, int , float , char.都可以">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f31f.png?v8">
+<meta property="article:published_time" content="2022-06-13T00:33:11.000Z">
+<meta property="article:modified_time" content="2022-06-13T09:41:35.169Z">
+<meta property="article:author" content="黄鑫远">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f31f.png?v8">
+
+<link rel="canonical" href="https://github.com/huang-chip/huang-chip.github.io/2022/06/13/study-C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>study_C# | 大黄之领域</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">大黄之领域</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/huang-chip/huang-chip.github.io/2022/06/13/study-C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="黄鑫远">
+      <meta itemprop="description" content="111喜欢我的博客吗">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大黄之领域">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          study_C#
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-06-13 08:33:11 / 修改时间：17:41:35" itemprop="dateCreated datePublished" datetime="2022-06-13T08:33:11+08:00">2022-06-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<ul>
+<li><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2></li>
+</ul>
+</blockquote>
+<ul>
+<li>C#的多行注释是/**/    单行注释是//</li>
+<li>(必不可少)在任何 C# 程序中的第一条语句都是：<code>using System;</code></li>
+<li>标识符必须以字母、下划线或 @开头,且大小写敏感,注意: <code>@if 是有效的标识符，但 if 不是，因为 if 是关键字</code></li>
+<li><blockquote>
+<p>C#的数据类型(三种:)</p>
+<blockquote>
+<ul>
+<li>值类型（Value types）<br>就是我们常见的bool, int , float , char.都可以归类为值类型</li>
+</ul>
+<hr>
+<ul>
+<li>引用类型（Reference types）<blockquote>
+<p>对象:  (对象是值类型的终极基础类,因此可以被赋予任何类型的数据)</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">object</span> obj;</span><br><span class="line">obj = <span class="number">100</span>; <span class="comment">// 这是装箱</span></span><br><span class="line"><span class="comment">/*当一个值类型转换为对象类型时，则被称为 装箱；另一方面，当一个对象类型转换为值类型时，则被称为 拆箱。*/</span></span><br></pre></td></tr></tbody></table></figure>
+<p>动态（Dynamic）类型 /<em>完全没看懂啊,过</em>/<br>字符串（String）类型<br>(允许给变量分配任何字符串值),有两种赋值方式</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string str = "runoob.com";</span><br><span class="line">string str2 = @"C:\Windows";//带@类似于python里面的'r'+地址</span><br><span class="line"> &gt;&gt;&gt;/*带@的作用是忽略引号里面的转义字符,将转义字符（\）当作普通字符对待*/</span><br></pre></td></tr></tbody></table></figure>
+<p>指针类型（Pointer types）<br>(指针类型变量存储另一种类型的内存地址,用法同C和C++)</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;char* cptr;</span><br><span class="line">&gt;&gt;int* iptr;//举个例子,就是像这样</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</blockquote>
+</blockquote>
+</li>
+<li><blockquote>
+<p>类型转换(隐式和显氏)<br>显氏是将其他类型变成基类(Object类型),不会数据丢失<br>隐式就是用函数强制转换格式,比如</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;int i = 75;</span><br><span class="line">&gt;Console.WriteLine(i.ToString());//输出结果为75,但是字符串型</span><br><span class="line">&gt;/*ToInt16(),ToString(),*/</span><br></pre></td></tr></tbody></table></figure></blockquote>
+</li>
+<li>给变量赋值(和C语言完全一致)<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int d = 3, f = 5;    /* 初始化 d 和 f. */</span><br></pre></td></tr></tbody></table></figure></li>
+<li>给常量赋值(注意,常量const是不可修改的)<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const int c1 = 5;</span><br><span class="line">const string h = @"\\server\share\file.txt"; /*记住,不可更改哦*/</span><br></pre></td></tr></tbody></table></figure></li>
+<li><blockquote>
+<p>运算符<br>基础运算和其他语言一样(‘%’是取整除后的余数)<br>自增自减运算 , 目前看到最好的解释  </p>
+<blockquote>
+<p>c = a++:_____先将 a 赋值给 c，再对 a 进行自增运算。<br>c = ++a:_____先将 a 进行自增运算，再将 a 赋值给 c 。<br>c = a–:_____先将 a 赋值给 c，再对 a 进行自减运算。<br>c = –a:_____先将 a 进行自减运算，再将 a 赋值给 c 。</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+<hr>
+<blockquote>
+<ul>
+<li><h2 id="控制语句"><a href="#控制语句" class="headerlink" title="控制语句"></a>控制语句</h2></li>
+<li><p>判断语句<br> 判断语句分为switch,if else嵌套,和三相判断</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="comment">//if else语句</span></span><br><span class="line">   <span class="keyword">if</span> (a &lt; <span class="number">20</span>)</span><br><span class="line">   {</span><br><span class="line">      <span class="comment">/* 如果条件为真，则输出下面的语句 */</span></span><br><span class="line">     Console.WriteLine(<span class="string">"a 小于 20"</span>);</span><br><span class="line">   }</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">   {</span><br><span class="line">       <span class="comment">/* 如果条件为假，则输出下面的语句 */</span></span><br><span class="line">       Console.WriteLine(<span class="string">"a 大于 20"</span>);</span><br><span class="line">   }</span><br><span class="line"></span><br><span class="line">&gt;<span class="comment">//switch语句</span></span><br><span class="line">&gt;<span class="keyword">switch</span> (day)</span><br><span class="line">     {</span><br><span class="line">       <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">         Console.WriteLine(<span class="string">"Monday"</span>);</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">         Console.WriteLine(<span class="string">"Tuesday"</span>);</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">      }<span class="comment">/*这边如果没加break的话,如果case1,那么他就会一直运算到&gt;case的最后,所以一定要加break*/</span></span><br><span class="line"></span><br><span class="line">&gt;<span class="comment">//三相表达式</span></span><br><span class="line">&gt;<span class="keyword">return</span> num &gt; <span class="number">0</span> ? <span class="number">100</span> :<span class="number">1</span>;  <span class="comment">//如果num&gt;0则返回100，否则返回1</span></span><br><span class="line">&gt;<span class="comment">/*Exp1 ? Exp2 : Exp3; -&gt;如果 Exp1 为真，则计算 Exp2 的值。如果 &gt;Exp1 为假，则计算 Exp3 的值*/</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>循环语句<br> 循环语句分为while,for</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="comment">//while语句</span></span><br><span class="line">   <span class="keyword">while</span> (a &lt; <span class="number">20</span>)</span><br><span class="line">          {</span><br><span class="line">              Console.WriteLine(<span class="string">"a 的值： {0}"</span>, a);</span><br><span class="line">              a++;</span><br><span class="line">         }</span><br><span class="line"></span><br><span class="line">&gt;<span class="comment">/* for 循环执行 */</span></span><br><span class="line">          <span class="keyword">for</span> (<span class="built_in">int</span> a = <span class="number">10</span>; a &lt; <span class="number">20</span>; a = a + <span class="number">1</span>)</span><br><span class="line">          {</span><br><span class="line">              Console.WriteLine(<span class="string">"a 的值： {0}"</span>, a);</span><br><span class="line">          }</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</blockquote>
+<hr>
+<blockquote>
+<ul>
+<li><h2 id="有关class的操作解释"><a href="#有关class的操作解释" class="headerlink" title="有关class的操作解释"></a>有关class的操作解释</h2></li>
+</ul>
+</blockquote>
+<ul>
+<li>C#封装<br>所谓封装,就是在class里面声明变量的时候,前面加上一些修饰符(效果就像python里面的global a=5全局变量一样)//以下为解释<br>(1) Pubilc ：任何公有成员可以被外部的类访问。<br> (2) Private ：只有同一个类中的函数可以访问它的私有成员。<br> (3) Protected ：该类内部和继承类中可以访问。   <figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Rectangle</span></span><br><span class="line">   {</span><br><span class="line">       <span class="comment">//成员变量,全局可调用</span></span><br><span class="line">       <span class="keyword">public</span> <span class="built_in">double</span> length;</span><br><span class="line">       <span class="keyword">public</span> <span class="built_in">double</span> width;</span><br><span class="line">       <span class="comment">//只能内部调用</span></span><br><span class="line">       <span class="keyword">private</span> <span class="built_in">double</span> area;</span><br><span class="line">   }</span><br></pre></td></tr></tbody></table></figure></li>
+<li>C# 方法<br>所谓方法,就是用class里面的语句封装成一个函数<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">class</span> <span class="title">NumberManipulator</span></span><br><span class="line">{</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">FindMax</span>(<span class="params"><span class="built_in">int</span> num1, <span class="built_in">int</span> num2</span>)</span></span><br><span class="line">   {</span><br><span class="line">      <span class="comment">/* 局部变量声明 */</span></span><br><span class="line">      <span class="built_in">int</span> result;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (num1 &gt; num2)</span><br><span class="line">         result = num1;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">         result = num2;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">   }</span><br><span class="line">   ...</span><br><span class="line">}</span><br><span class="line">Console.WriteLine(<span class="string">"最大值是： {0}"</span>, FindMax(<span class="number">3</span>,<span class="number">5</span>) );</span><br><span class="line">Console.ReadLine();</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<hr>
+<blockquote>
+<ul>
+<li><h2 id="数据结构类型-列表等"><a href="#数据结构类型-列表等" class="headerlink" title="数据结构类型(列表等)"></a>数据结构类型(列表等)</h2></li>
+</ul>
+</blockquote>
+<ul>
+<li>数组(我最爱的数组!)  <figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数组的初始化(包括创建数组,赋予它十个double类型的内容,给第一个元素赋值)</span></span><br><span class="line"><span class="built_in">double</span>[] balance = <span class="keyword">new</span> <span class="built_in">double</span>[<span class="number">10</span>];</span><br><span class="line">balance[<span class="number">0</span>] = <span class="number">4500.0</span>;</span><br><span class="line"><span class="comment">//创建时直接赋值(好方便鸭)</span></span><br><span class="line"><span class="built_in">double</span>[] balance = { <span class="number">2340.0</span>, <span class="number">4523.69</span>, <span class="number">3421.0</span>};</span><br><span class="line"><span class="comment">//当然也可以忽略数组的大小来做一下</span></span><br><span class="line"><span class="built_in">int</span> [] marks = <span class="keyword">new</span> <span class="built_in">int</span>[]  { <span class="number">99</span>,  <span class="number">98</span>, <span class="number">92</span>, <span class="number">97</span>, <span class="number">95</span>};</span><br><span class="line"><span class="comment">/*至于调用,第一项为array[0]后面一样*/</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li>字符串(有很多有趣的方法,但是太多了,下次再写吧~)<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*这里空出来给处理字符串的函数方法们*/</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li>其实看了结构体,看了class,但是还没看继承,只能先到这里了,祝你幸运~<span class="github-emoji"><span>🌟</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f31f.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/08/mivie%20/" rel="prev" title="~mivie~">
+      <i class="fa fa-chevron-left"></i> ~mivie~
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/06/13/NingXia-volunteer-score-statistics-based-on-selenium/" rel="next" title="NingXia volunteer score statistics based on selenium">
+      NingXia volunteer score statistics based on selenium <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">控制语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E5%85%B3class%E7%9A%84%E6%93%8D%E4%BD%9C%E8%A7%A3%E9%87%8A"><span class="nav-number">3.</span> <span class="nav-text">有关class的操作解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B1%BB%E5%9E%8B-%E5%88%97%E8%A1%A8%E7%AD%89"><span class="nav-number">4.</span> <span class="nav-text">数据结构类型(列表等)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">黄鑫远</p>
+  <div class="site-description" itemprop="description">111喜欢我的博客吗</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄鑫远</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
