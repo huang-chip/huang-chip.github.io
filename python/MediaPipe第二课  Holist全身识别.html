@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MediaPipe第二课 : Holist全身识别 | Yuuki与Mio的代码工坊</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/assets/img/vue.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <meta name="description" content="一个基于vuepress搭建的文档平台">
+    <meta name="author" content="Yuuki(陈钱) 与 Mio(黄鑫远)">
+    <meta name="keywords" content="建站 vuepress 阿里云服务器 前端 后端 JavaWeb">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="/images/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/assets/css/0.styles.6f404eb7.css" as="style"><link rel="preload" href="/assets/js/app.410475a6.js" as="script"><link rel="preload" href="/assets/js/2.e7059012.js" as="script"><link rel="preload" href="/assets/js/1.1b0facc3.js" as="script"><link rel="preload" href="/assets/js/26.e4e72e30.js" as="script"><link rel="preload" href="/assets/js/19.85d5b285.js" as="script"><link rel="prefetch" href="/assets/js/10.7a73e9aa.js"><link rel="prefetch" href="/assets/js/11.739f777f.js"><link rel="prefetch" href="/assets/js/12.4624cd9b.js"><link rel="prefetch" href="/assets/js/13.d19fbe91.js"><link rel="prefetch" href="/assets/js/14.ab193c6d.js"><link rel="prefetch" href="/assets/js/15.690aaeb4.js"><link rel="prefetch" href="/assets/js/16.78cf9935.js"><link rel="prefetch" href="/assets/js/17.fe0bb0d4.js"><link rel="prefetch" href="/assets/js/18.5c461771.js"><link rel="prefetch" href="/assets/js/20.1c3bf0da.js"><link rel="prefetch" href="/assets/js/21.026684e0.js"><link rel="prefetch" href="/assets/js/22.e6bd54ae.js"><link rel="prefetch" href="/assets/js/23.2de2723d.js"><link rel="prefetch" href="/assets/js/24.69c05c7b.js"><link rel="prefetch" href="/assets/js/25.7385a7e9.js"><link rel="prefetch" href="/assets/js/27.45bbd4a6.js"><link rel="prefetch" href="/assets/js/28.f20c322b.js"><link rel="prefetch" href="/assets/js/29.8a51d969.js"><link rel="prefetch" href="/assets/js/3.218ffbac.js"><link rel="prefetch" href="/assets/js/30.fc78cc99.js"><link rel="prefetch" href="/assets/js/31.ca625784.js"><link rel="prefetch" href="/assets/js/32.ed19234b.js"><link rel="prefetch" href="/assets/js/33.556541dc.js"><link rel="prefetch" href="/assets/js/34.417db715.js"><link rel="prefetch" href="/assets/js/35.d7024578.js"><link rel="prefetch" href="/assets/js/36.4ffad35f.js"><link rel="prefetch" href="/assets/js/4.a7aeb368.js"><link rel="prefetch" href="/assets/js/5.6fb317e7.js"><link rel="prefetch" href="/assets/js/6.16b2dcbe.js"><link rel="prefetch" href="/assets/js/7.152620db.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.03d43e08.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6f404eb7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/assets/img/vue.png" alt="Yuuki与Mio的代码工坊" class="logo"> <span class="site-name can-hide">Yuuki与Mio的代码工坊</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link router-link-active">
+  Python
+</a></div><div class="nav-item"><a href="/front/" class="nav-link">
+  前端
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  google链接
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="About me" class="dropdown-title"><span class="title">关于我</span> <span class="arrow down"></span></button> <button type="button" aria-label="About me" class="mobile-dropdown-title"><span class="title">关于我</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/language/chinese/" class="nav-link">
+  Gitee
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Github
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Website
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link router-link-active">
+  Python
+</a></div><div class="nav-item"><a href="/front/" class="nav-link">
+  前端
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  google链接
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="About me" class="dropdown-title"><span class="title">关于我</span> <span class="arrow down"></span></button> <button type="button" aria-label="About me" class="mobile-dropdown-title"><span class="title">关于我</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/language/chinese/" class="nav-link">
+  Gitee
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Github
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Website
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>MediaPipe第二课 : Holist全身识别</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/python/MediaPipe%E7%AC%AC%E4%BA%8C%E8%AF%BE%20%20Holist%E5%85%A8%E8%BA%AB%E8%AF%86%E5%88%AB.html#mediapipe-holist的官方介绍" class="sidebar-link">MediaPipe Holist的官方介绍</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/python/MediaPipe%E7%AC%AC%E4%BA%8C%E8%AF%BE%20%20Holist%E5%85%A8%E8%BA%AB%E8%AF%86%E5%88%AB.html#如何应用在python程序中" class="sidebar-link">如何应用在Python程序中</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/python/MediaPipe%E7%AC%AC%E4%BA%8C%E8%AF%BE%20%20Holist%E5%85%A8%E8%BA%AB%E8%AF%86%E5%88%AB.html#概要" class="sidebar-link">概要</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="mediapipe第二课-holist全身识别"><a href="#mediapipe第二课-holist全身识别" class="header-anchor">#</a> MediaPipe第二课 : Holist全身识别</h1> <h2 id="mediapipe-holist的官方介绍"><a href="#mediapipe-holist的官方介绍" class="header-anchor">#</a> MediaPipe Holist的官方介绍</h2> <ul><li>Holist可以<strong>实时感知</strong> : 人体姿势、面部标志和手部跟踪</li> <li>实现各种现代生活应用 : 如<strong>健身和运动分析、手势控制和手语识别、增强现实</strong></li> <li>MediaPipe Holistic <a href="https://cloud.tencent.com/developer/article/1693921" target="_blank" rel="noopener noreferrer">pipeline(流水线)<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>集成了<strong>姿势、面部和手部组件</strong>的单独模型</li></ul> <hr> <h2 id="如何应用在python程序中"><a href="#如何应用在python程序中" class="header-anchor">#</a> 如何应用在Python程序中</h2> <ul><li>由于大框架可以直接应用, 此处以&quot;<em>MP_Holist全身识别(实时视频).py</em>&quot;为大家演示, 顺带交大家如何调整参数以实现自己需要的结果</li></ul> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">import</span> cv2
+<span class="token keyword">import</span> mediapipe <span class="token keyword">as</span> mp
+<span class="token comment"># 如果出现报错 : no moudle named “cv2”, 请自行安装opencv-python库</span>
+<span class="token comment"># 如果出现报错 : no moudle named “mediapipe”, 请自行安装mediapipe库</span>
+
+<span class="token comment"># mp.solutions.drawing_utils用于绘制</span>
+mp_drawing <span class="token operator">=</span> mp<span class="token punctuation">.</span>solutions<span class="token punctuation">.</span>drawing_utils
+
+<span class="token comment"># 参数：1、颜色，2、线条粗细，3、点的半径</span>
+DrawingSpec_point <span class="token operator">=</span> mp_drawing<span class="token punctuation">.</span>DrawingSpec<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+DrawingSpec_line <span class="token operator">=</span> mp_drawing<span class="token punctuation">.</span>DrawingSpec<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token comment"># 我的喜好是&quot;绿细线&amp;红点&quot;, 大家可以自由调整</span>
+
+<span class="token comment"># mp.solutions.holistic是一个类别，是人的整体</span>
+mp_holistic <span class="token operator">=</span> mp<span class="token punctuation">.</span>solutions<span class="token punctuation">.</span>holistic
+
+<span class="token comment"># 参数：1、是否检测静态图片，2、姿态模型的复杂度，3、结果看起来平滑（用于video有效），4、检测阈值，5、跟踪阈值</span>
+holistic <span class="token operator">=</span> mp_holistic<span class="token punctuation">.</span>Holistic<span class="token punctuation">(</span>min_detection_confidence<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">,</span> min_tracking_confidence<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">)</span>
+
+<span class="token comment"># cap = cv2.VideoCapture('input.mp4')</span>
+cap <span class="token operator">=</span> cv2<span class="token punctuation">.</span>VideoCapture<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token comment">#笔记本自带摄像头</span>
+<span class="token keyword">while</span> cap<span class="token punctuation">.</span>isOpened<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    success<span class="token punctuation">,</span> image <span class="token operator">=</span> cap<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token keyword">not</span> success<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;Ignoring empty camera frame.&quot;</span><span class="token punctuation">)</span>
+        <span class="token keyword">continue</span>
+    image1 <span class="token operator">=</span> cv2<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>image<span class="token punctuation">,</span> cv2<span class="token punctuation">.</span>COLOR_BGR2RGB<span class="token punctuation">)</span>
+
+    <span class="token comment"># 处理RGB图像</span>
+    results <span class="token operator">=</span> holistic<span class="token punctuation">.</span>process<span class="token punctuation">(</span>image1<span class="token punctuation">)</span>
+
+    <span class="token triple-quoted-string string">'''
+    mp_holistic.PoseLandmark类中共33个人体骨骼点
+    mp_holistic.HandLandmark类中共21个手部关键点
+    脸部有468个关键点
+    '''</span>
+
+    <span class="token comment"># 绘制</span>
+    mp_drawing<span class="token punctuation">.</span>draw_landmarks<span class="token punctuation">(</span>
+        image<span class="token punctuation">,</span> results<span class="token punctuation">.</span>face_landmarks<span class="token punctuation">,</span> mp_holistic<span class="token punctuation">.</span>FACEMESH_CONTOURS<span class="token punctuation">,</span> DrawingSpec_point<span class="token punctuation">,</span> DrawingSpec_line<span class="token punctuation">)</span>
+    mp_drawing<span class="token punctuation">.</span>draw_landmarks<span class="token punctuation">(</span>
+        image<span class="token punctuation">,</span> results<span class="token punctuation">.</span>left_hand_landmarks<span class="token punctuation">,</span> mp_holistic<span class="token punctuation">.</span>HAND_CONNECTIONS<span class="token punctuation">,</span> DrawingSpec_point<span class="token punctuation">,</span> DrawingSpec_line<span class="token punctuation">)</span>
+    mp_drawing<span class="token punctuation">.</span>draw_landmarks<span class="token punctuation">(</span>
+        image<span class="token punctuation">,</span> results<span class="token punctuation">.</span>right_hand_landmarks<span class="token punctuation">,</span> mp_holistic<span class="token punctuation">.</span>HAND_CONNECTIONS<span class="token punctuation">,</span> DrawingSpec_point<span class="token punctuation">,</span> DrawingSpec_line<span class="token punctuation">)</span>
+    mp_drawing<span class="token punctuation">.</span>draw_landmarks<span class="token punctuation">(</span>
+        image<span class="token punctuation">,</span> results<span class="token punctuation">.</span>pose_landmarks<span class="token punctuation">,</span> mp_holistic<span class="token punctuation">.</span>POSE_CONNECTIONS<span class="token punctuation">,</span> DrawingSpec_point<span class="token punctuation">,</span> DrawingSpec_line<span class="token punctuation">)</span>
+
+    cv2<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">'MediaPipe Holistic'</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span> <span class="token operator">==</span> <span class="token builtin">ord</span><span class="token punctuation">(</span><span class="token string">'q'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">break</span>
+
+holistic<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+cv2<span class="token punctuation">.</span>destroyAllWindows<span class="token punctuation">(</span><span class="token punctuation">)</span>
+cap<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div> <h2 id="概要"><a href="#概要" class="header-anchor">#</a> 概要</h2> <table><thead><tr><th>文章标题</th> <th>Python文字转语音(调研&amp;成品函数)</th></tr></thead> <tbody><tr><td>作者</td> <td>Master（Mio）</td></tr> <tr><td>发布时间</td> <td>2022年9月1日 23:07:07</td></tr> <tr><td>状态</td> <td>未发布</td></tr> <tr><td>阅读量</td> <td>0</td></tr></tbody></table></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2024年3月11日星期一凌晨12点37分</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.410475a6.js" defer></script><script src="/assets/js/2.e7059012.js" defer></script><script src="/assets/js/1.1b0facc3.js" defer></script><script src="/assets/js/26.e4e72e30.js" defer></script><script src="/assets/js/19.85d5b285.js" defer></script>
+  </body>
+</html>

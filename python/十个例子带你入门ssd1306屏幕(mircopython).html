@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>十个例子带你入门ssd1306屏幕(mircopython) | Yuuki与Mio的代码工坊</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/assets/img/vue.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <meta name="description" content="一个基于vuepress搭建的文档平台">
+    <meta name="author" content="Yuuki(陈钱) 与 Mio(黄鑫远)">
+    <meta name="keywords" content="建站 vuepress 阿里云服务器 前端 后端 JavaWeb">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="/images/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/assets/css/0.styles.6f404eb7.css" as="style"><link rel="preload" href="/assets/js/app.410475a6.js" as="script"><link rel="preload" href="/assets/js/2.e7059012.js" as="script"><link rel="preload" href="/assets/js/1.1b0facc3.js" as="script"><link rel="preload" href="/assets/js/30.fc78cc99.js" as="script"><link rel="preload" href="/assets/js/19.85d5b285.js" as="script"><link rel="prefetch" href="/assets/js/10.7a73e9aa.js"><link rel="prefetch" href="/assets/js/11.739f777f.js"><link rel="prefetch" href="/assets/js/12.4624cd9b.js"><link rel="prefetch" href="/assets/js/13.d19fbe91.js"><link rel="prefetch" href="/assets/js/14.ab193c6d.js"><link rel="prefetch" href="/assets/js/15.690aaeb4.js"><link rel="prefetch" href="/assets/js/16.78cf9935.js"><link rel="prefetch" href="/assets/js/17.fe0bb0d4.js"><link rel="prefetch" href="/assets/js/18.5c461771.js"><link rel="prefetch" href="/assets/js/20.1c3bf0da.js"><link rel="prefetch" href="/assets/js/21.026684e0.js"><link rel="prefetch" href="/assets/js/22.e6bd54ae.js"><link rel="prefetch" href="/assets/js/23.2de2723d.js"><link rel="prefetch" href="/assets/js/24.69c05c7b.js"><link rel="prefetch" href="/assets/js/25.7385a7e9.js"><link rel="prefetch" href="/assets/js/26.e4e72e30.js"><link rel="prefetch" href="/assets/js/27.45bbd4a6.js"><link rel="prefetch" href="/assets/js/28.f20c322b.js"><link rel="prefetch" href="/assets/js/29.8a51d969.js"><link rel="prefetch" href="/assets/js/3.218ffbac.js"><link rel="prefetch" href="/assets/js/31.ca625784.js"><link rel="prefetch" href="/assets/js/32.ed19234b.js"><link rel="prefetch" href="/assets/js/33.556541dc.js"><link rel="prefetch" href="/assets/js/34.417db715.js"><link rel="prefetch" href="/assets/js/35.d7024578.js"><link rel="prefetch" href="/assets/js/36.4ffad35f.js"><link rel="prefetch" href="/assets/js/4.a7aeb368.js"><link rel="prefetch" href="/assets/js/5.6fb317e7.js"><link rel="prefetch" href="/assets/js/6.16b2dcbe.js"><link rel="prefetch" href="/assets/js/7.152620db.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.03d43e08.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6f404eb7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/assets/img/vue.png" alt="Yuuki与Mio的代码工坊" class="logo"> <span class="site-name can-hide">Yuuki与Mio的代码工坊</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link router-link-active">
+  Python
+</a></div><div class="nav-item"><a href="/front/" class="nav-link">
+  前端
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  google链接
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="About me" class="dropdown-title"><span class="title">关于我</span> <span class="arrow down"></span></button> <button type="button" aria-label="About me" class="mobile-dropdown-title"><span class="title">关于我</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/language/chinese/" class="nav-link">
+  Gitee
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Github
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Website
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link router-link-active">
+  Python
+</a></div><div class="nav-item"><a href="/front/" class="nav-link">
+  前端
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  google链接
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="About me" class="dropdown-title"><span class="title">关于我</span> <span class="arrow down"></span></button> <button type="button" aria-label="About me" class="mobile-dropdown-title"><span class="title">关于我</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/language/chinese/" class="nav-link">
+  Gitee
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Github
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Website
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>十个例子带你入门ssd1306屏幕(mircopython)</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/python/%E5%8D%81%E4%B8%AA%E4%BE%8B%E5%AD%90%E5%B8%A6%E4%BD%A0%E5%85%A5%E9%97%A8ssd1306%E5%B1%8F%E5%B9%95(mircopython).html#概要" class="sidebar-link">概要</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="content__default"><h1 id="十个例子带你入门ssd1306屏幕-mircopython"><a href="#十个例子带你入门ssd1306屏幕-mircopython" class="header-anchor">#</a> 十个例子带你入门ssd1306屏幕(mircopython)</h1> <h3 id="介绍一下环境和硬件部分"><a href="#介绍一下环境和硬件部分" class="header-anchor">#</a> 介绍一下环境和硬件部分</h3> <p>我的开发板是树莓派pico, 他的优点就是引脚多, 强大的2040处理器, 关键是便宜, 只需30元以内就可以买到。</p> <p>使用的屏幕是基于ssd1306的四引脚OLED屏幕, 我根据<a href="http://micropython.circuitpython.com.cn/en/latet/esp8266/tutorial/ssd1306.html" target="_blank" rel="noopener noreferrer">micropython官方教程<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>找到了这块屏幕的示例。</p> <p>接线图图示:</p> <h3 id="例0-ssd1306-py-请将第三方库的代码保存到单片机中-没有这一步其他都白搭"><a href="#例0-ssd1306-py-请将第三方库的代码保存到单片机中-没有这一步其他都白搭" class="header-anchor">#</a> 例0: <a href="http://huangxinyuan.cn/shuoshuo/download_ssd1306-py/" target="_blank" rel="noopener noreferrer">ssd1306.py<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>, 请将第三方库的代码保存到单片机中(没有这一步其他都白搭)</h3> <hr> <h3 id="例1-i2c初始化ssd1306"><a href="#例1-i2c初始化ssd1306" class="header-anchor">#</a> 例1: I2C初始化ssd1306</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token comment"># 首先从machine库里面调出 I2C通讯模块 和 Pin引脚控制模块</span>
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+
+<span class="token triple-quoted-string string">'''自定义scl和sda对应的接线端口'''</span>
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+<span class="token comment">#scl,sda在屏幕后方有标注, 接线根据个人情况调整</span>
+<span class="token triple-quoted-string string">'''自定义屏幕的像素长度和宽度'''</span>
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span> 
+<span class="token comment">#128是屏幕长度, 64是屏幕宽度, 单位:像素(px), 根据个人情况调整 </span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;HealthIT Released&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment">#(文本内容,起始x坐标, 起始y坐标)</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#没有这一行, 屏幕不会显示任何内容 </span>
+</code></pre></div><hr> <h3 id="例2-点亮和熄灭一块屏幕"><a href="#例2-点亮和熄灭一块屏幕" class="header-anchor">#</a> 例2: 点亮和熄灭一块屏幕</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">#整片屏幕全亮</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+    display<span class="token punctuation">.</span>poweroff<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#关闭显示器电源，像素保留在内存中</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>poweron<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">#打开显示器电源，重新绘制像素</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;通俗解释
+display.poweroff()#关闭显示器电源，像素保留在内存中
+display.poweron()#打开显示器电源，重新绘制像素
+# 经过测试, 这样的方法打开/关闭显示器, 像素内容无需重新设置, 均保存在内存中, 再次show即可展示。
+# 通俗的讲, 就是一个开关按键, 只是暂停显示, 因此不用再次display一次, 屏幕中显示的内容不会清空
+&quot;&quot;&quot;</span>
+</code></pre></div><hr> <h3 id="例3-调整屏幕的亮度"><a href="#例3-调整屏幕的亮度" class="header-anchor">#</a> 例3: 调整屏幕的亮度</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">#整片屏幕全亮</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;亮度:&quot;</span><span class="token punctuation">,</span>i<span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>contrast<span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token comment">#关闭显示器电源，像素保留在内存中</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.01</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;解释
+display.contrast(0) #dim,此时亮度最暗
+display.contrast(255)#bright, 此时亮度最亮
+# 经过测试, 这相当于一个亮度调节器, 你可以随时调整显示的亮度(同样的, 不需要display.show刷新图像)
+&quot;&quot;&quot;</span>
+</code></pre></div><hr> <h3 id="例4-让屏幕内容反转显示-负片效果"><a href="#例4-让屏幕内容反转显示-负片效果" class="header-anchor">#</a> 例4: 让屏幕内容反转显示(负片效果)</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+
+<span class="token comment"># 显示一些文字</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;HealthIT_Library&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;From_USST&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;code_by:&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;MioHuang!:)&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">52</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;图像反转:&quot;</span><span class="token punctuation">,</span>i<span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>invert<span class="token punctuation">(</span>i<span class="token operator">%</span><span class="token number">2</span><span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.3</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;解释
+display.invert(0) #图像显示正常(不反转)
+display.invert(1) #整片屏幕图像取反(反转)
+# 这相当于一个负片和正片调节器, 你可以显示原内容/取反的内容 (同样的, 不需要display.show刷新图像)
+&quot;&quot;&quot;</span>
+</code></pre></div><hr> <h3 id="例5-屏幕内容180度旋转"><a href="#例5-屏幕内容180度旋转" class="header-anchor">#</a> 例5: 屏幕内容180度旋转</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+
+<span class="token comment"># 显示一些文字</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;HealthIT_Library&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;From_USST&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;code_by:&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;MioHuang!:)&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">52</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;图像旋转:&quot;</span><span class="token punctuation">,</span>i<span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>rotate<span class="token punctuation">(</span>i<span class="token operator">%</span><span class="token number">2</span><span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.3</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;解释
+display.rotate(True) #图像旋转180度 (True可替换为1)
+display.rotate(False) #图像旋转0度 (False可替换为0)
+# 当我们看屏幕的方向变化时, 不要扭动你的头! 快使用rotate旋转功能~ (同样的, 不需要display.show刷新图像)
+&quot;&quot;&quot;</span>
+</code></pre></div><hr> <h3 id="例6-由display-顺便科普一下framebuffer"><a href="#例6-由display-顺便科普一下framebuffer" class="header-anchor">#</a> 例6: 由display, 顺便科普一下FrameBuffer</h3> <h4 id="framebuffer科普"><a href="#framebuffer科普" class="header-anchor">#</a> FrameBuffer科普</h4> <blockquote><p>Framebuffer，也叫<strong>帧缓冲</strong>，其内容对应于屏幕上的界面显示，可以将其简单理解为<strong>屏幕上显示内容对应的缓存</strong>，修改Framebuffer中的内容，即表示修改屏幕上的内容，所以，<strong>直接操作Framebuffer可以直接从显示器上观察到效果</strong>。</p> <ul><li>说的更直白一些, framebuffer就是一个临时存放数据的区域, <strong>对应OLED或LCD屏幕的显存(或内存)</strong></li> <li><a href="https://zhuanlan.zhihu.com/p/381766140" target="_blank" rel="noopener noreferrer">如果你想了解更多FrameBuffer的内容, 看这个链接<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></blockquote> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+
+<span class="token comment"># display.fill(1) #整片屏幕全亮</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;HealthIT_Library&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;From_USST&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;code_by:&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;MioHuang!:)&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">52</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;别急, 我只能说别急&quot;</span><span class="token punctuation">)</span>
+time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;你该不会想退了吧, 还没完呢&quot;</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token comment">#我才发现, 当你把整个页面都变黑, 就相当于擦除了显存中的缓存内容, 这样可以保证内容不会重叠 </span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;Surprise!&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;display.fill(0)&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;can clear screen&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;\^u^/&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">52</span><span class="token punctuation">)</span>
+
+time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;解释
+display.show() #将FrameBuffer的内容写入显存
+display.fill(0) #擦除显存中的内容
+# 如果你不用display.show()将内容存入显存, 那么很显然, 他无法显示。(这很重要啊喂!)
+&quot;&quot;&quot;</span>
+</code></pre></div><hr> <p style="font-size:21px;color:hotpink;text-align:center;">
+简单的部分介绍完了, 来学一些进阶知识叭 |:)
+</p> <h3 id="例7-获取-填充目标坐标的颜色值"><a href="#例7-获取-填充目标坐标的颜色值" class="header-anchor">#</a> 例7: 获取/填充目标坐标的颜色值</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+<span class="token comment"># 实验一: 获取全黑状态下(0,10)点的颜色值</span>
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;全黑状态下颜色值: &quot;</span><span class="token punctuation">,</span>display<span class="token punctuation">.</span>pixel<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>pixel<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token comment">#画个点测试一下</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 实验二: 获取全亮状态下(0,10)点的颜色值</span>
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;全亮状态下颜色值: &quot;</span><span class="token punctuation">,</span>display<span class="token punctuation">.</span>pixel<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>pixel<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token comment">#画个点测试一下</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 实验三: 你已经学会画点了, 那么来创作星星吧!</span>
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;Stars For You~&quot;</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> count <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">66</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    x<span class="token operator">=</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">128</span><span class="token punctuation">)</span>
+    y<span class="token operator">=</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>pixel<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.02</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;解释
+# pixel函数是用来获取图像中某一点的像素的RGB颜色值
+display.pixel(10, 10) #显示这一个坐标下的颜色值(单色屏幕上只有0或1)
+display.pixel(10, 10, 0) #将这一个坐标, 显示对应的颜色值
+## yysy, 这个星空点亮效果真的好浪漫!
+&quot;&quot;&quot;</span>
+</code></pre></div><hr> <h3 id="例8-画几条笔直的线"><a href="#例8-画几条笔直的线" class="header-anchor">#</a> 例8: 画几条笔直的线</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+
+<span class="token comment"># 实验1: hline绘制水平线实验</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    display<span class="token punctuation">.</span>hline<span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">+</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token operator">+</span>i<span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">#hline绘制水平线, 参数分别为起始坐标x=0，y=8，长度=40，颜色=1</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.02</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 实验2: vline绘制垂直线实验</span>
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    display<span class="token punctuation">.</span>vline<span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">+</span>i<span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token operator">+</span>i<span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">#hline绘制水平线, 参数分别为起始坐标x=0，y=8，长度=40，颜色=1</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.02</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+<span class="token comment"># 实验3: line绘制任意线实验(是怎样的烟火~)</span>
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    x<span class="token operator">=</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">128</span><span class="token punctuation">)</span>
+    y<span class="token operator">=</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>line<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">#hline绘制水平线, 参数分别为起始坐标x=0，y=8，长度=40，颜色=1</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.02</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;解释
+# 这一个demo中, 我们学习如何画一条线
+display.hline(0, 0, 60, 1) #绘制水平线, 起始坐标x=0, y=0, 线长60像素, 颜色为1
+display.vline(5, 5, 55, 1) #绘制垂直线, 起始坐标x=5, y=5, 线长55像素, 颜色为1
+display.line(0, 0, 128, 64, 1) #绘制任意线段, 起始坐标x1=0, y1=0; 结束坐标x2=128, y2=64, 颜色为1
+## 恭喜你, 继学会display.pixel(10,10,1)画点后, 又学会display.line(0, 0, 128, 64, 1)画线了!:)
+&quot;&quot;&quot;</span>
+</code></pre></div><hr> <h3 id="例9-画个矩形框"><a href="#例9-画个矩形框" class="header-anchor">#</a> 例9: 画个矩形框</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+
+<span class="token comment"># 实验1: rect绘制矩形框</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 起始坐标x1=0, y1=0; 结束坐标x2=循环数*4, y2=循环数*4, 颜色为1 ## 从左上角一直向下衍生的空心矩形</span>
+    display<span class="token punctuation">.</span>rect<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> i<span class="token operator">*</span><span class="token number">4</span><span class="token punctuation">,</span> i<span class="token operator">*</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.05</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 实验2: fill_rect绘制实心矩形框</span>
+display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.2</span><span class="token punctuation">)</span>
+    x<span class="token operator">=</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">128</span><span class="token punctuation">)</span>
+    y<span class="token operator">=</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">)</span>
+    <span class="token comment"># display.rect(10, 10, 107, 43, 1)# 起始坐标x1=10, y1=10; 结束坐标x2=107, y2=43, 颜色为1</span>
+    <span class="token comment"># display.fill_rect(x-1, y-1, x, y, 1)</span>
+    display<span class="token punctuation">.</span>fill_rect<span class="token punctuation">(</span>x<span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span> y<span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f&quot;实心矩形始于:(</span><span class="token interpolation"><span class="token punctuation">{</span>x<span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">}</span></span><span class="token string">,</span><span class="token interpolation"><span class="token punctuation">{</span>y<span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">}</span></span><span class="token string">); 终于(</span><span class="token interpolation"><span class="token punctuation">{</span>x<span class="token punctuation">}</span></span><span class="token string">,</span><span class="token interpolation"><span class="token punctuation">{</span>y<span class="token punctuation">}</span></span><span class="token string">)&quot;</span></span><span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.2</span><span class="token punctuation">)</span>
+    display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;解释
+# 这一个demo中, 我们学习如何画一条线
+display.rect(10, 10, 107, 43, 1) #绘制空心矩形, 起始坐标x1=10, y1=10; 结束坐标x2=107, y2=43, 颜色为1
+display.fill_rect(0, 0, 40, 20, 1) #绘制实心矩形, 起始坐标x1=0, y1=0; 结束坐标x2=40, y2=20, 颜色为1
+## 恭喜你, 继学会display.pixel(10,10,1)画点, 学会display.line(0, 0, 64, 128, 1)画线后
+## 又学会display.rect(10, 10, 107, 43, 1)和display.fill_rect(0, 0, 40, 20, 1)画空心/实心矩形了!:)
+&quot;&quot;&quot;</span>
+</code></pre></div><hr> <h3 id="例10-scoll实现元素的滚动"><a href="#例10-scoll实现元素的滚动" class="header-anchor">#</a> 例10: scoll实现元素的滚动~</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> machine <span class="token keyword">import</span> SoftI2C<span class="token punctuation">,</span>Pin
+<span class="token keyword">from</span> ssd1306 <span class="token keyword">import</span> SSD1306_I2C
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+i2c<span class="token operator">=</span>SoftI2C<span class="token punctuation">(</span>scl<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>sda<span class="token operator">=</span>Pin<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+display<span class="token operator">=</span>SSD1306_I2C<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span><span class="token number">64</span><span class="token punctuation">,</span>i2c<span class="token punctuation">)</span>
+
+display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;David Martinez&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>i<span class="token operator">%</span><span class="token number">10</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        display<span class="token punctuation">.</span>fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+        display<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token string">&quot;David Martinez&quot;</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+        display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.2</span><span class="token punctuation">)</span>
+        display<span class="token punctuation">.</span>scroll<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+        display<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">&quot;&quot;&quot;解释
+display.scroll(5, 5) #将显存中的内容, 沿着x正向(右)移动5px, 沿着y负向(下)移动5px
+## 在我看来, 这是伪平移, 它只不过是复制显存中的内容, 将它粘贴到了其他地方而已, 并不能实现元素的唯一, 没意思。
+## 我本来以为它可以实现长文字弹幕什么的, 结果...。
+## 不过目前看来, 它可以实现弹球之类的东西吧(大概)
+&quot;&quot;&quot;</span>
+</code></pre></div><p>通过这十个例子, 想必你已经入门了基本操作, 下一篇文章, 我会介绍如何显示中文和图片, 欢迎催稿~~~</p> <h2 id="概要"><a href="#概要" class="header-anchor">#</a> 概要</h2> <table><thead><tr><th>文章标题</th> <th>十个例子带你入门ssd1306屏幕(mircopython)</th></tr></thead> <tbody><tr><td>作者</td> <td>Master（Mio）</td></tr> <tr><td>发布时间</td> <td><strong>2022年10月28日 01:50</strong></td></tr> <tr><td>状态</td> <td>已发布</td></tr> <tr><td>阅读量</td> <td>536</td></tr></tbody></table></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2024年3月11日星期一凌晨12点37分</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.410475a6.js" defer></script><script src="/assets/js/2.e7059012.js" defer></script><script src="/assets/js/1.1b0facc3.js" defer></script><script src="/assets/js/30.fc78cc99.js" defer></script><script src="/assets/js/19.85d5b285.js" defer></script>
+  </body>
+</html>

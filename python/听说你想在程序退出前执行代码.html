@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>听说你想在程序退出前执行代码 | Yuuki与Mio的代码工坊</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/assets/img/vue.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <meta name="description" content="一个基于vuepress搭建的文档平台">
+    <meta name="author" content="Yuuki(陈钱) 与 Mio(黄鑫远)">
+    <meta name="keywords" content="建站 vuepress 阿里云服务器 前端 后端 JavaWeb">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="/images/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    
+    <link rel="preload" href="/assets/css/0.styles.6f404eb7.css" as="style"><link rel="preload" href="/assets/js/app.410475a6.js" as="script"><link rel="preload" href="/assets/js/2.e7059012.js" as="script"><link rel="preload" href="/assets/js/1.1b0facc3.js" as="script"><link rel="preload" href="/assets/js/31.ca625784.js" as="script"><link rel="preload" href="/assets/js/19.85d5b285.js" as="script"><link rel="prefetch" href="/assets/js/10.7a73e9aa.js"><link rel="prefetch" href="/assets/js/11.739f777f.js"><link rel="prefetch" href="/assets/js/12.4624cd9b.js"><link rel="prefetch" href="/assets/js/13.d19fbe91.js"><link rel="prefetch" href="/assets/js/14.ab193c6d.js"><link rel="prefetch" href="/assets/js/15.690aaeb4.js"><link rel="prefetch" href="/assets/js/16.78cf9935.js"><link rel="prefetch" href="/assets/js/17.fe0bb0d4.js"><link rel="prefetch" href="/assets/js/18.5c461771.js"><link rel="prefetch" href="/assets/js/20.1c3bf0da.js"><link rel="prefetch" href="/assets/js/21.026684e0.js"><link rel="prefetch" href="/assets/js/22.e6bd54ae.js"><link rel="prefetch" href="/assets/js/23.2de2723d.js"><link rel="prefetch" href="/assets/js/24.69c05c7b.js"><link rel="prefetch" href="/assets/js/25.7385a7e9.js"><link rel="prefetch" href="/assets/js/26.e4e72e30.js"><link rel="prefetch" href="/assets/js/27.45bbd4a6.js"><link rel="prefetch" href="/assets/js/28.f20c322b.js"><link rel="prefetch" href="/assets/js/29.8a51d969.js"><link rel="prefetch" href="/assets/js/3.218ffbac.js"><link rel="prefetch" href="/assets/js/30.fc78cc99.js"><link rel="prefetch" href="/assets/js/32.ed19234b.js"><link rel="prefetch" href="/assets/js/33.556541dc.js"><link rel="prefetch" href="/assets/js/34.417db715.js"><link rel="prefetch" href="/assets/js/35.d7024578.js"><link rel="prefetch" href="/assets/js/36.4ffad35f.js"><link rel="prefetch" href="/assets/js/4.a7aeb368.js"><link rel="prefetch" href="/assets/js/5.6fb317e7.js"><link rel="prefetch" href="/assets/js/6.16b2dcbe.js"><link rel="prefetch" href="/assets/js/7.152620db.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.03d43e08.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6f404eb7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/assets/img/vue.png" alt="Yuuki与Mio的代码工坊" class="logo"> <span class="site-name can-hide">Yuuki与Mio的代码工坊</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link router-link-active">
+  Python
+</a></div><div class="nav-item"><a href="/front/" class="nav-link">
+  前端
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  google链接
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="About me" class="dropdown-title"><span class="title">关于我</span> <span class="arrow down"></span></button> <button type="button" aria-label="About me" class="mobile-dropdown-title"><span class="title">关于我</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/language/chinese/" class="nav-link">
+  Gitee
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Github
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Website
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link router-link-active">
+  Python
+</a></div><div class="nav-item"><a href="/front/" class="nav-link">
+  前端
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  google链接
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="About me" class="dropdown-title"><span class="title">关于我</span> <span class="arrow down"></span></button> <button type="button" aria-label="About me" class="mobile-dropdown-title"><span class="title">关于我</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/language/chinese/" class="nav-link">
+  Gitee
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Github
+</a></li><li class="dropdown-item"><!----> <a href="/language/japanese/" class="nav-link">
+  Website
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>听说你想在程序退出前执行代码</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/python/%E5%90%AC%E8%AF%B4%E4%BD%A0%E6%83%B3%E5%9C%A8%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81.html#答案-atexit内置库" class="sidebar-link">答案 (atexit内置库)</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/python/%E5%90%AC%E8%AF%B4%E4%BD%A0%E6%83%B3%E5%9C%A8%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81.html#三种使用情景" class="sidebar-link">三种使用情景</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/python/%E5%90%AC%E8%AF%B4%E4%BD%A0%E6%83%B3%E5%9C%A8%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81.html#_1-注册函数" class="sidebar-link">1. 注册函数</a></li><li class="sidebar-sub-header"><a href="/python/%E5%90%AC%E8%AF%B4%E4%BD%A0%E6%83%B3%E5%9C%A8%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81.html#_2-装饰器模式" class="sidebar-link">2. 装饰器模式</a></li><li class="sidebar-sub-header"><a href="/python/%E5%90%AC%E8%AF%B4%E4%BD%A0%E6%83%B3%E5%9C%A8%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81.html#_3-取消注册函数" class="sidebar-link">3.取消注册函数</a></li></ul></li><li><a href="/python/%E5%90%AC%E8%AF%B4%E4%BD%A0%E6%83%B3%E5%9C%A8%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81.html#概要" class="sidebar-link">概要</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="听说你想在程序退出前执行代码"><a href="#听说你想在程序退出前执行代码" class="header-anchor">#</a> 听说你想在程序退出前执行代码</h1> <h3 id="我的需求"><a href="#我的需求" class="header-anchor">#</a> 我的需求</h3> <p>最近在用micropython玩单片机, 有时候oled屏幕在程序退出后不会熄灭, 只要通电, 他就像一个傻小子一样亮一天。<br>
+因此我想每次退出程序的时候, 关闭oled屏幕。</p> <h2 id="答案-atexit内置库"><a href="#答案-atexit内置库" class="header-anchor">#</a> 答案 (atexit内置库)</h2> <ul><li><a href="https://docs.python.org/zh-cn/3.10/library/atexit.html" target="_blank" rel="noopener noreferrer">atexit 模块 <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>定义了清理函数的注册和反注册函数. 被注册的函数会在解释器正常终止时执行</li> <li>使用内置库 atexit 注册程序退出前要执行的函数，即使程序崩溃，都会执行。</li></ul> <h2 id="三种使用情景"><a href="#三种使用情景" class="header-anchor">#</a> 三种使用情景</h2> <h3 id="_1-注册函数"><a href="#_1-注册函数" class="header-anchor">#</a> 1. 注册函数</h3> <blockquote><div class="language-python extra-class"><pre class="language-python"><code>atexit<span class="token punctuation">.</span>register<span class="token punctuation">(</span>func<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+</code></pre></div></blockquote> <div class="language- extra-class"><pre class="language-text"><code>&gt; 以上为官方提供的注册函数样例
+
+|参数|func|\*args|\**kwargs|
+|-|:-:|:-:|:-:|
+|**意义**|函数名称|不定数量的参数|不定数量的键值对|
+
+##### 不传参的情况
+```python
+import atexit
+def func_1():
+    print('结束')
+atexit.register(func_1)# 注册了一个清理函数, 程序结束时运行函数
+
+if __name__ == '__main__':
+    print(&quot;我来代替程序中正确运行的语句&quot;)
+    # print(如果你想体验报错语句, 运行我即可)
+</code></pre></div><h5 id="传参的情况"><a href="#传参的情况" class="header-anchor">#</a> 传参的情况</h5> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">import</span> atexit
+<span class="token keyword">def</span> <span class="token function">func_2</span><span class="token punctuation">(</span>author<span class="token punctuation">,</span>lasttime<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;本程序作者: &quot;</span><span class="token punctuation">,</span>author<span class="token punctuation">,</span> <span class="token string">&quot;\t最后编辑于: &quot;</span><span class="token punctuation">,</span>lasttime<span class="token punctuation">)</span>
+<span class="token comment"># 传参(*args方式)</span>
+atexit<span class="token punctuation">.</span>register<span class="token punctuation">(</span>func_2<span class="token punctuation">,</span><span class="token string">&quot;Mio&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;2022-10-14&quot;</span><span class="token punctuation">)</span>
+<span class="token comment"># OR (**kwargs情况)</span>
+atexit<span class="token punctuation">.</span>register<span class="token punctuation">(</span>func_2<span class="token punctuation">,</span>author<span class="token operator">=</span><span class="token string">&quot;Mio二号&quot;</span><span class="token punctuation">,</span>lasttime<span class="token operator">=</span><span class="token string">&quot;2022-01-14&quot;</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;我来代替程序中正确运行的语句&quot;</span><span class="token punctuation">)</span>
+    <span class="token comment"># print(如果你想体验报错语句, 运行我即可)</span>
+</code></pre></div><p>输出结果</p> <div class="language-python extra-class"><pre class="language-python"><code>NameError<span class="token punctuation">:</span> name <span class="token string">'如果你想体验报错语句'</span> <span class="token keyword">is</span> <span class="token keyword">not</span> defined
+我来代替程序中正确运行的语句
+本程序作者<span class="token punctuation">:</span>  Mio二号 	最后编辑于<span class="token punctuation">:</span>  <span class="token number">2022</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">14</span>
+本程序作者<span class="token punctuation">:</span>  Mio 	最后编辑于<span class="token punctuation">:</span>  <span class="token number">2022</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">-</span><span class="token number">14</span>
+</code></pre></div><blockquote><p>你可以很直观的看见, atexit输出结束函数时<br>
+符合'栈'的 &quot;先进者后出队, 后来者居上先出队&quot;的规律</p></blockquote> <h3 id="_2-装饰器模式"><a href="#_2-装饰器模式" class="header-anchor">#</a> 2. 装饰器模式</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">import</span> atexit
+
+<span class="token comment"># 只需要在'需要装饰的函数'上方写入即可</span>
+<span class="token decorator annotation punctuation">@atexit<span class="token punctuation">.</span>register</span>
+<span class="token keyword">def</span> <span class="token function">func_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'结束'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">&quot;我来代替程序中正确运行的语句&quot;</span><span class="token punctuation">)</span>
+	<span class="token comment"># print(如果你想体验报错语句, 运行我即可)</span>
+</code></pre></div><h3 id="_3-取消注册函数"><a href="#_3-取消注册函数" class="header-anchor">#</a> 3.取消注册函数</h3> <div class="language-python extra-class"><pre class="language-python"><code>atexit<span class="token punctuation">.</span>unregister<span class="token punctuation">(</span>func<span class="token punctuation">)</span>
+</code></pre></div><p>如果你不想调用了, 将函数名填入上列'func'中, 即可取消它作为结束函数<br>
+注意 : 无论你之前将某函数注册了几次, 运行这行, 会完全取消这个函数作为结束时的输出, 而不是针对某一次</p> <hr> <p>本文参考自<a href="https://docs.python.org/zh-cn/3.10/library/atexit.html" target="_blank" rel="noopener noreferrer">PyPI-atexit<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>, 由Mio_Huang于2022/10/24最后编辑</p> <h2 id="概要"><a href="#概要" class="header-anchor">#</a> 概要</h2> <table><thead><tr><th>文章标题</th> <th>听说你想在程序退出前执行代码</th></tr></thead> <tbody><tr><td>作者</td> <td>Master（Mio）</td></tr> <tr><td>发布时间</td> <td><strong>2022年10月24日 18:28</strong></td></tr> <tr><td>状态</td> <td>已发布</td></tr> <tr><td>阅读量</td> <td>132</td></tr></tbody></table></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">2024年3月11日星期一凌晨12点37分</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.410475a6.js" defer></script><script src="/assets/js/2.e7059012.js" defer></script><script src="/assets/js/1.1b0facc3.js" defer></script><script src="/assets/js/31.ca625784.js" defer></script><script src="/assets/js/19.85d5b285.js" defer></script>
+  </body>
+</html>
