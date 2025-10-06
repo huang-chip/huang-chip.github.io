@@ -19,6 +19,7 @@
       --border: #F3D9A4;           /* 边线 */
       --success:#22C55E;
       --danger:#EF4444;
+      --shadow:0 6px 20px -4px rgba(0,0,0,.12),0 2px 6px -1px rgba(0,0,0,.08);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -100,9 +101,40 @@
 
     .footer{font-size:12px; color:var(--muted); text-align:center; padding-bottom:6px}
     .sr{position:absolute; left:-9999px}
+
+    /* 抽屉与移动端适配 */
+    .backdrop{position:fixed; inset:0; background:rgba(0,0,0,.35); backdrop-filter:blur(2px); opacity:0; visibility:hidden; transition:.25s; z-index:900}
+    .backdrop.show{opacity:1; visibility:visible}
+    @media (max-width: 860px){
+      .doc{flex-direction:column}
+      .side{position:fixed; left:0; top:0; bottom:0; transform:translateX(-100%); width:80%; max-width:320px; z-index:1000; box-shadow:var(--shadow); border-right:2px solid var(--border); border-radius:0; transition:.3s cubic-bezier(.4,0,.2,1)}
+      .side.show{transform:translateX(0)}
+      body.drawer-open{overflow:hidden}
+      .header-actions{flex-wrap:wrap}
+      .brand h1{font-size:18px}
+      .composer{padding:10px 10px}
+      .chat{padding:10px}
+    }
+    @media (max-width:500px){
+      .btn, .btn.secondary, .btn.ghost{padding:6px 10px; font-size:12px}
+      .tag{display:none}
+      .brand h1{font-size:16px}
+    }
+    /* 轻量暗色模式（根据系统） */
+    @media (prefers-color-scheme: dark){
+      :root{--bg:#2B2A28; --card:#35332F; --text:#F5F5F2; --muted:#A6A6A6; --bubble:#3E3C37; --bubble-me:#4A3B27; --border:#5A513F}
+      body{background: radial-gradient(1200px 600px at 10% -10%, #4A412E 0%, #2F2C27 60%, #26231F 100%);}
+      .header{background:linear-gradient(180deg,#5B4729 0%, #3E301B 100%);}
+      .side{background:linear-gradient(180deg,#3D3528 0%, #2F2A22 100%);}
+      .chat{background:linear-gradient(180deg,#3A342B 0%, #2C2923 100%);}
+      .bubble{box-shadow:0 4px 10px rgba(0,0,0,.35)}
+      .btn.secondary{background:#3C3327; color:#FFD28A}
+      .btn.ghost{color:#FFC46A}
+    }
   </style>
 </head>
 <body>
+  <div id="backdrop" class="backdrop" aria-hidden="true"></div>
   <div class="app">
     <header class="header">
       <div class="brand">
@@ -111,6 +143,7 @@
         <span class="tag">向日葵橘 · 青少年友好</span>
       </div>
       <div class="header-actions">
+        <button class="btn ghost" id="btn-settings" aria-controls="side-panel" aria-expanded="false">设置</button>
         <button class="btn secondary" id="btn-clear">清空对话</button>
         <button class="btn" id="btn-export">导出聊天</button>
         <button class="btn ghost" id="btn-about">关于</button>
@@ -118,7 +151,7 @@
     </header>
 
     <section class="doc" role="main">
-      <aside class="side" aria-label="设置">
+      <aside id="side-panel" class="side" aria-label="设置">
         <div class="panel-title">连接大模型（可选）</div>
         <div class="setting">
           <label>OpenAI 兼容 API 地址</label>
@@ -191,6 +224,9 @@
     const btnClear = $('#btn-clear');
     const btnExport = $('#btn-export');
     const btnAbout = $('#btn-about');
+    const btnSettings = $('#btn-settings');
+    const backdrop = $('#backdrop');
+    const sidePanel = $('#side-panel');
     const statusEl = $('#status');
     const tplMsg = $('#tpl-msg');
     const tplMe = $('#tpl-me');
@@ -206,6 +242,38 @@
     $('#api-key').value = conf.key;
     $('#api-model').value = conf.model;
     updateStatus();
+
+    // 通过 URL hash 可一次性注入 key（例如 https://域名/#key=sk-xxxx ）
+    const hashKeyMatch = location.hash.match(/key=([^&]+)/);
+    if(hashKeyMatch && !conf.key){
+      conf.key = decodeURIComponent(hashKeyMatch[1]);
+      localStorage.setItem('xtb_api_key', conf.key);
+      $('#api-key').value = conf.key;
+      updateStatus();
+      // 清理 hash（避免暴露在截屏或分享）
+      history.replaceState(null,'', location.pathname + location.search);
+    }
+
+    // 移动端抽屉逻辑
+    function openDrawer(){
+      sidePanel.classList.add('show');
+      backdrop.classList.add('show');
+      document.body.classList.add('drawer-open');
+      btnSettings.setAttribute('aria-expanded','true');
+    }
+    function closeDrawer(){
+      sidePanel.classList.remove('show');
+      backdrop.classList.remove('show');
+      document.body.classList.remove('drawer-open');
+      btnSettings.setAttribute('aria-expanded','false');
+    }
+    btnSettings.addEventListener('click', ()=>{
+      sidePanel.classList.contains('show') ? closeDrawer() : openDrawer();
+    });
+    backdrop.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
+    // 初始：小屏幕默认关闭
+    if(window.matchMedia('(max-width:860px)').matches){ closeDrawer(); }
 
     // 语音合成
     const voiceSelect = $('#voice-select');
@@ -346,6 +414,8 @@
       localStorage.setItem('xtb_api_model', conf.model);
       updateStatus();
       toast('设置已保存');
+      // 保存后在移动端自动收起
+      if(window.matchMedia('(max-width:860px)').matches){ closeDrawer(); }
     });
 
     function updateStatus(){
