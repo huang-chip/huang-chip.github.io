@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小淘博士 · 知识科普大语言模型</title>
+  <meta name="description" content="小淘博士：面向青少年的知识科普问答，文字+语音，支持接入大语言模型接口。" />
+  <style>
+    :root{
+      --orange:#FFA726;            /* 主色：向日葵橘 */
+      --orange-deep:#FB8C00;       /* 深橘 */
+      --yellow:#FFD54F;            /* 点缀黄 */
+      --bg:#FFF8E6;                /* 柔和背景 */
+      --card:#FFFFFF;              /* 卡片白 */
+      --text:#2B2B2B;              /* 主文字 */
+      --muted:#6B7280;             /* 次文字 */
+      --bubble:#FFFFFF;            /* 聊天气泡白 */
+      --bubble-me:#FFF0D9;         /* 我方气泡淡橘 */
+      --border: #F3D9A4;           /* 边线 */
+      --success:#22C55E;
+      --danger:#EF4444;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans SC, Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color:var(--text); background: radial-gradient(1200px 600px at 10% -10%, #FFE7B3 0%, #FFF8E6 50%, #FFF8E6 100%);
+    }
+    .app{
+      max-width: 980px; margin: 0 auto; padding: 16px; min-height: 100%; display:flex; flex-direction:column; gap:12px;
+    }
+    .header{
+      display:flex; align-items:center; gap:12px; padding:12px 14px; background:linear-gradient(180deg, #FFE8BE 0%, #FFD48A 100%);
+      border:2px solid var(--border); border-radius:18px; box-shadow: 0 8px 24px rgba(251,140,0,.15);
+    }
+    .brand{display:flex; align-items:center; gap:10px}
+    .brand h1{margin:0; font-size:20px; font-weight:800; letter-spacing: .5px}
+    .tag{font-size:12px; color:#6b4c00; background:#FFF2CC; border:1px dashed #E6C152; padding:4px 8px; border-radius:999px}
+    .header-actions{margin-left:auto; display:flex; align-items:center; gap:8px}
+    .btn{appearance:none; border:none; cursor:pointer; padding:8px 12px; border-radius:12px; font-weight:700; background:var(--orange); color:#fff; box-shadow:0 4px 10px rgba(251,140,0,.25); transition:.2s}
+    .btn:hover{transform:translateY(-1px); background:var(--orange-deep)}
+    .btn.secondary{background:#fff; color:#8B5E00; border:2px solid var(--border); box-shadow:none}
+    .btn.ghost{background:transparent; color:#8B5E00}
+
+    .sunflower{
+      width:44px; height:44px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #FFD54F, #FFB300 70%);
+      border:2px solid #F4C65A; position:relative; display:grid; place-items:center; overflow:hidden;
+    }
+    .sunflower:before, .sunflower:after{
+      content:""; position:absolute; width:80px; height:80px; border-radius:50%;
+      background: conic-gradient(from 0deg, #FFB74D, #FFC76A, #FFE082, #FFB74D);
+      z-index:0; opacity:.65; animation:spin 14s linear infinite;
+    }
+    .sunflower:after{animation-direction: reverse; opacity:.5}
+    @keyframes spin{to{transform:rotate(1turn)}}
+
+    .doc{
+      background: var(--card); border:2px solid var(--border); border-radius:18px; overflow:hidden; display:flex; min-height: 68vh;
+    }
+    .side{
+      width: 260px; background: linear-gradient(180deg,#FFF9ED 0%, #FFF3D6 100%); border-right:2px solid var(--border); padding:14px; display:flex; flex-direction:column; gap:12px
+    }
+    .panel-title{font-weight:800; font-size:14px; color:#7A5200}
+    .setting{display:flex; flex-direction:column; gap:6px}
+    .input, .select, textarea{
+      width:100%; padding:10px 12px; border-radius:12px; border:2px solid var(--border); background:#fff; outline:none; font-size:14px
+    }
+    .hint{font-size:12px; color:var(--muted)}
+    .status{font-size:12px; font-weight:700}
+
+    .main{flex:1; display:flex; flex-direction:column}
+    .chat{
+      flex:1; padding:14px; overflow:auto; background:linear-gradient(180deg, #FFFDF6 0%, #FFF8E6 100%);
+    }
+    .bubble-row{display:flex; gap:10px; margin:10px 0}
+    .bubble{max-width:70%; padding:12px 14px; border-radius:16px; border:1px solid var(--border); background:var(--bubble); box-shadow:0 4px 10px rgba(255,183,77,.18)}
+    .me{margin-left:auto}
+    .bubble.me{background:var(--bubble-me)}
+    .avatar{
+      width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:#fff; border:2px solid var(--border)
+    }
+
+    /* 小博士形象：白脸+黑色博士帽 */
+    .mascot{position:relative; width:40px; height:40px}
+    .hat{position:absolute; top:-6px; left:4px; width:32px; height:12px; background:#111; border-radius:3px 3px 0 0}
+    .hat:after{content:""; position:absolute; top:10px; left:3px; width:26px; height:3px; background:#111; border-radius:2px}
+    .face{position:absolute; bottom:0; left:5px; width:30px; height:26px; background:#fff; border:2px solid var(--border); border-radius:14px}
+    .eye{position:absolute; width:4px; height:4px; background:#111; border-radius:50%}
+    .eye.l{left:8px; top:9px}
+    .eye.r{right:8px; top:9px}
+    .smile{position:absolute; left:50%; transform:translateX(-50%); bottom:6px; width:12px; height:6px; border:2px solid #111; border-top:none; border-radius:0 0 8px 8px}
+
+    .composer{display:flex; gap:8px; padding:12px; border-top:2px solid var(--border); background:#fff}
+    .composer .input{flex:1}
+
+    .pill{padding:6px 10px; border-radius:999px; background:#fff; border:2px solid var(--border); color:#7A5200; font-size:12px; cursor:pointer}
+    .pill:hover{background:#FFF4DB}
+
+    .link-list{display:flex; gap:8px; flex-wrap:wrap}
+
+    .footer{font-size:12px; color:var(--muted); text-align:center; padding-bottom:6px}
+    .sr{position:absolute; left:-9999px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <div class="sunflower" aria-hidden="true"></div>
+        <h1>小淘博士 · 知识科普</h1>
+        <span class="tag">向日葵橘 · 青少年友好</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary" id="btn-clear">清空对话</button>
+        <button class="btn" id="btn-export">导出聊天</button>
+        <button class="btn ghost" id="btn-about">关于</button>
+      </div>
+    </header>
+
+    <section class="doc" role="main">
+      <aside class="side" aria-label="设置">
+        <div class="panel-title">连接大模型（可选）</div>
+        <div class="setting">
+          <label>OpenAI 兼容 API 地址</label>
+          <input class="input" id="api-base" placeholder="如 https://api.openai.com/v1" />
+          <label>API Key（保存在浏览器本地）</label>
+          <input class="input" id="api-key" placeholder="sk-..." />
+          <label>模型名</label>
+          <input class="input" id="api-model" placeholder="gpt-4o-mini 或 glm-4-flash 等" />
+          <button class="btn" id="btn-save">保存设置</button>
+          <div class="hint">未配置时使用本地“演示模式”，可离线回答基础科普问题。</div>
+          <div class="status" id="status">当前：演示模式</div>
+        </div>
+        <hr style="border:none;border-top:2px dashed var(--border)">
+        <div class="panel-title">语音设置</div>
+        <div class="setting">
+          <label>朗读回答</label>
+          <select class="select" id="voice-select"></select>
+          <div class="hint">使用浏览器自带语音合成，移动端兼容性视设备而定。</div>
+        </div>
+        <hr style="border:none;border-top:2px dashed var(--border)">
+        <div class="panel-title">快速示例</div>
+        <div class="link-list">
+          <button class="pill ex">水变成冰属于什么物理现象？</button>
+          <button class="pill ex">为什么天空是蓝色的？</button>
+          <button class="pill ex">火山为什么会喷发？</button>
+          <button class="pill ex">什么是光合作用？</button>
+        </div>
+      </aside>
+
+      <div class="main">
+        <div id="chat" class="chat" aria-live="polite" aria-label="聊天内容"></div>
+        <div class="composer">
+          <label class="sr" for="ask">输入你的问题</label>
+          <input id="ask" class="input" placeholder="和小淘博士聊聊科学吧… 回车发送" />
+          <button class="btn" id="send">发送</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© 2025 小淘博士 · GitHub Pages 可直接托管单文件</div>
+  </div>
+
+  <template id="tpl-msg">
+    <div class="bubble-row">
+      <div class="avatar">
+        <div class="mascot">
+          <div class="hat"></div>
+          <div class="face">
+            <div class="eye l"></div>
+            <div class="eye r"></div>
+            <div class="smile"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bubble"></div>
+    </div>
+  </template>
+
+  <template id="tpl-me">
+    <div class="bubble-row me">
+      <div class="bubble me"></div>
+    </div>
+  </template>
+
+  <script>
+    const $ = (s, p=document) => p.querySelector(s);
+    const chat = $('#chat');
+    const ask = $('#ask');
+    const sendBtn = $('#send');
+    const btnClear = $('#btn-clear');
+    const btnExport = $('#btn-export');
+    const btnAbout = $('#btn-about');
+    const statusEl = $('#status');
+    const tplMsg = $('#tpl-msg');
+    const tplMe = $('#tpl-me');
+
+    const conf = {
+      base: localStorage.getItem('xtb_api_base') || '',
+      key: localStorage.getItem('xtb_api_key') || '',
+      model: localStorage.getItem('xtb_api_model') || ''
+    };
+
+    // 初始化 UI
+    $('#api-base').value = conf.base;
+    $('#api-key').value = conf.key;
+    $('#api-model').value = conf.model;
+    updateStatus();
+
+    // 语音合成
+    const voiceSelect = $('#voice-select');
+    let voices = [];
+    function populateVoices(){
+      voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+      voiceSelect.innerHTML = '';
+      const opts = voices.filter(v=>/zh|cmn|lzh|yue|Chinese/i.test(v.lang)||/child|kids|female/i.test(v.name) || true);
+      opts.forEach((v,i)=>{
+        const o = document.createElement('option');
+        o.value = v.name; o.textContent = `${v.name} (${v.lang})`; voiceSelect.appendChild(o);
+      });
+    }
+    if('speechSynthesis' in window){
+      speechSynthesis.onvoiceschanged = populateVoices; populateVoices();
+    }
+    function speak(text){
+      if(!('speechSynthesis' in window)) return;
+      const u = new SpeechSynthesisUtterance(text.replace(/\n+/g,' '));
+      const name = voiceSelect.value;
+      const v = voices.find(v=>v.name===name);
+      if(v) u.voice = v;
+      u.rate = 1.02; u.pitch = 1.05; u.volume = 1;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    }
+
+    // 小知识库（演示模式）
+    const kb = [
+      {q:/水.*变.*冰|结冰|冰点|冰冻/, a:`这是**凝固**（也叫结冰）现象：物质由液态→固态的**物态变化**。\n水在标准大气压下 **0°C** 开始结冰。过程伴随**放热**（释放凝固潜热），所以冰箱里制冰会把热量带走并排到外面。`, v:["https://www.bilibili.com/video/BV1x4411j7HY"], kw:"凝固 物态变化 结冰"},
+      {q:/天空.*蓝|为什么.*蓝/, a:`主要因为**瑞利散射**：阳光进入大气层后，短波长（蓝光）被空气分子更强地散射，向各个方向“洒”过来，我们抬头更多看到蓝色。\n傍晚偏红，是因为光程更长，短波被散掉，长波（红橙）保留下来。`, v:["https://www.youtube.com/watch?v=AbfZ5Gm1Ksg"], kw:"瑞利散射 天空蓝"},
+      {q:/火山.*喷发/, a:`地幔部分熔融形成**岩浆**，在压力驱动和气体（H₂O、CO₂ 等）膨胀作用下向上移动，若岩浆房压力超过地表承载，就会沿裂隙喷出地表形成喷发。类型有**溢流式**与**爆炸式**等。`, v:["https://www.bilibili.com/video/BV1qJ411W7c6"], kw:"火山 岩浆 喷发"},
+      {q:/光合.*作.*用|光合作用/, a:`绿色植物、藻类和某些细菌在**叶绿体**中，利用光能把 **CO₂ + H₂O** 转化为**有机物（葡萄糖）**并释放 **O₂**。简式：\n\n**6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂**（光/叶绿素）\n\n它是地球碳循环与氧气来源的根基。`, v:["https://www.youtube.com/watch?v=LgYPeeABoUs"], kw:"光合作用 叶绿体 二氧化碳"}
+    ];
+
+    function localAnswer(q){
+      for(const item of kb){
+        if(item.q.test(q)){
+          const links = (item.v||[]).map(u=>`<a href="${u}" target="_blank" rel="noopener">相关视频</a>`).join(' · ');
+          return `${item.a}\n\n${links ? '📺 '+links: ''}`;
+        }
+      }
+      return `我来用简单语言解释：**${escapeHtml(q)}**。\n\n目前处于“演示模式”，我会用科普方式回答常见问题。若你在左侧设置中接入 **OpenAI 兼容接口** 与 **API Key**，我就能像豆包那样进行更通用、更深入的回答，还能引用更多知识点与举例噢～`;
+    }
+
+    // 发送消息
+    async function onSend(){
+      const text = ask.value.trim();
+      if(!text) return;
+      addMe(text);
+      ask.value='';
+      scrollToEnd();
+
+      addBot('思考中…');
+      scrollToEnd();
+
+      try{
+        const useApi = conf.base && conf.key && conf.model;
+        const answer = useApi ? await llmAnswer(text) : localAnswer(text);
+        replaceLastBot(answer);
+        speak(stripMd(answer));
+      }catch(e){
+        replaceLastBot(`❌ 出错啦：${e.message||e}`);
+      }
+      scrollToEnd();
+    }
+
+    sendBtn.addEventListener('click', onSend);
+    ask.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); onSend(); }});
+
+    // LLM 接入（OpenAI 兼容）
+    async function llmAnswer(q){
+      const url = conf.base.replace(/\/$/, '') + '/chat/completions';
+      const sysPrompt = `你是“**小淘博士**”，一位面向 8-16 岁青少年的科普助教。用简洁、友好、比喻+例子的方式回答。要求：\n1) 先给出**直接答案**；\n2) 再用 2-4 句话解释原因；\n3) 如合适，附上 1-2 条**延伸思考**（用条目符号）；\n4) 保持积极、鼓励的语气；\n5) 避免成人黑话与缩写，数学/物理公式尽量简化；\n6) 若涉及危险实验，提醒安全注意事项。`;
+      const body = {
+        model: conf.model,
+        messages:[
+          {role:'system', content: sysPrompt},
+          {role:'user', content: q}
+        ],
+        temperature: 0.7,
+      };
+      const res = await fetch(url, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', 'Authorization': `Bearer ${conf.key}` },
+        body: JSON.stringify(body)
+      });
+      if(!res.ok){
+        const t = await res.text();
+        throw new Error(`接口返回 ${res.status}: ${t}`);
+      }
+      const data = await res.json();
+      const txt = data.choices?.[0]?.message?.content?.trim();
+      return txt || '（没有返回内容）';
+    }
+
+    // DOM 工具
+    function addMe(text){
+      const node = tplMe.content.cloneNode(true);
+      $('.bubble', node).innerHTML = renderMarkdown(escapeHtml(text));
+      chat.appendChild(node);
+    }
+    function addBot(text){
+      const node = tplMsg.content.cloneNode(true);
+      $('.bubble', node).innerHTML = renderMarkdown(escapeHtml(text));
+      chat.appendChild(node);
+    }
+    function replaceLastBot(text){
+      const rows = chat.querySelectorAll('.bubble-row');
+      for(let i=rows.length-1; i>=0; i--){
+        if(!rows[i].classList.contains('me')){ $('.bubble', rows[i]).innerHTML = renderMarkdown(escapeHtml(text)); return; }
+      }
+      addBot(text);
+    }
+    function scrollToEnd(){ chat.scrollTop = chat.scrollHeight; }
+
+    // Markdown 极简渲染（加粗、行内代码、换行、列表、链接）
+    function renderMarkdown(s){
+      s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1<\/strong>');
+      s = s.replace(/`([^`]+)`/g, '<code>$1<\/code>');
+      s = s.replace(/^\s*[-•]\s+(.*)$/gm, '<div>• $1<\/div>');
+      s = s.replace(/\n/g, '<br/>');
+      s = s.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1<\/a>');
+      return s;
+    }
+    function stripMd(s){ return s.replace(/\*\*|`/g,''); }
+    function escapeHtml(str){
+      return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    }
+
+    // 设置保存
+    $('#btn-save').addEventListener('click', ()=>{
+      conf.base = $('#api-base').value.trim();
+      conf.key = $('#api-key').value.trim();
+      conf.model = $('#api-model').value.trim();
+      localStorage.setItem('xtb_api_base', conf.base);
+      localStorage.setItem('xtb_api_key', conf.key);
+      localStorage.setItem('xtb_api_model', conf.model);
+      updateStatus();
+      toast('设置已保存');
+    });
+
+    function updateStatus(){
+      const useApi = conf.base && conf.key && conf.model;
+      statusEl.textContent = '当前：' + (useApi ? `API 模式（${conf.model}）` : '演示模式');
+      statusEl.style.color = useApi ? 'var(--success)' : 'var(--muted)';
+    }
+
+    // 示例填充
+    document.querySelectorAll('.ex').forEach(b=>b.addEventListener('click', ()=>{
+      ask.value = b.textContent; ask.focus();
+    }));
+
+    // 清空与导出
+    btnClear.addEventListener('click', ()=>{ chat.innerHTML = ''; toast('对话已清空'); });
+    btnExport.addEventListener('click', ()=>{
+      const lines = Array.from(chat.querySelectorAll('.bubble-row')).map(row=>{
+        const isMe = row.classList.contains('me');
+        const txt = row.querySelector('.bubble').innerText.replace(/\n+/g,'\n');
+        return (isMe? '我: ':'小淘博士: ') + txt;
+      }).join('\n\n');
+      const blob = new Blob([lines], {type:'text/plain;charset=utf-8'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = '小淘博士_聊天记录.txt'; a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // 关于
+    btnAbout.addEventListener('click', ()=>{
+      toast('小淘博士：青少年科普问答 · 单文件版，可直接上传 GitHub Pages');
+    });
+
+    // 简易 Toast
+    function toast(msg){
+      const div = document.createElement('div');
+      div.textContent = msg; div.style.cssText = `position:fixed;left:50%;top:16px;transform:translateX(-50%);background:${'var(--orange)'};color:#fff;padding:8px 12px;border-radius:999px;box-shadow:0 6px 16px rgba(251,140,0,.3);z-index:9999;font-weight:700`;
+      document.body.appendChild(div); setTimeout(()=>{div.remove()}, 1800);
+    }
+
+    // 首条欢迎
+    addBot('嗨～我是**小淘博士**🧑‍🎓！\n\n试着问我：**“水变成冰属于什么物理现象？”**\n我会用少儿友好的方式解释，还能把答案**读出来**。左侧可以接入你的大模型 API，让我更聪明！');
+  </script>
+</body>
+</html>
