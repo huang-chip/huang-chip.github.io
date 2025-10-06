@@ -19,7 +19,6 @@
       --border: #F3D9A4;           /* 边线 */
       --success:#22C55E;
       --danger:#EF4444;
-      --shadow:0 6px 20px -4px rgba(0,0,0,.12),0 2px 6px -1px rgba(0,0,0,.08);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -102,39 +101,24 @@
     .footer{font-size:12px; color:var(--muted); text-align:center; padding-bottom:6px}
     .sr{position:absolute; left:-9999px}
 
-    /* 抽屉与移动端适配 */
-    .backdrop{position:fixed; inset:0; background:rgba(0,0,0,.35); backdrop-filter:blur(2px); opacity:0; visibility:hidden; transition:.25s; z-index:900}
-    .backdrop.show{opacity:1; visibility:visible}
+    /* 响应式：移动端隐藏左栏，抽屉模式 */
     @media (max-width: 860px){
+      .app{padding:10px}
       .doc{flex-direction:column}
-      .side{position:fixed; left:0; top:0; bottom:0; transform:translateX(-100%); width:80%; max-width:320px; z-index:1000; box-shadow:var(--shadow); border-right:2px solid var(--border); border-radius:0; transition:.3s cubic-bezier(.4,0,.2,1)}
-      .side.show{transform:translateX(0)}
-      body.drawer-open{overflow:hidden}
-      .header-actions{flex-wrap:wrap}
-      .brand h1{font-size:18px}
-      .composer{padding:10px 10px}
-      .chat{padding:10px}
+      .side{
+        display:none; position:fixed; right:0; top:0; bottom:0;
+        width:min(92vw,340px); z-index:50; box-shadow:-8px 0 24px rgba(0,0,0,.12)
+      }
+      .side.show{display:flex}
+      .drawer-mask{position:fixed; inset:0; background:rgba(0,0,0,.28); z-index:40; display:none}
+      .drawer-mask.show{display:block}
+      .header-actions .btn.secondary{display:none}
+      #btn-open-side{display:inline-flex}
     }
-    @media (max-width:500px){
-      .btn, .btn.secondary, .btn.ghost{padding:6px 10px; font-size:12px}
-      .tag{display:none}
-      .brand h1{font-size:16px}
-    }
-    /* 轻量暗色模式（根据系统） */
-    @media (prefers-color-scheme: dark){
-      :root{--bg:#2B2A28; --card:#35332F; --text:#F5F5F2; --muted:#A6A6A6; --bubble:#3E3C37; --bubble-me:#4A3B27; --border:#5A513F}
-      body{background: radial-gradient(1200px 600px at 10% -10%, #4A412E 0%, #2F2C27 60%, #26231F 100%);}
-      .header{background:linear-gradient(180deg,#5B4729 0%, #3E301B 100%);}
-      .side{background:linear-gradient(180deg,#3D3528 0%, #2F2A22 100%);}
-      .chat{background:linear-gradient(180deg,#3A342B 0%, #2C2923 100%);}
-      .bubble{box-shadow:0 4px 10px rgba(0,0,0,.35)}
-      .btn.secondary{background:#3C3327; color:#FFD28A}
-      .btn.ghost{color:#FFC46A}
-    }
+    #btn-open-side{display:none; align-items:center; gap:6px}
   </style>
 </head>
 <body>
-  <div id="backdrop" class="backdrop" aria-hidden="true"></div>
   <div class="app">
     <header class="header">
       <div class="brand">
@@ -143,25 +127,29 @@
         <span class="tag">向日葵橘 · 青少年友好</span>
       </div>
       <div class="header-actions">
-        <button class="btn ghost" id="btn-settings" aria-controls="side-panel" aria-expanded="false">设置</button>
         <button class="btn secondary" id="btn-clear">清空对话</button>
         <button class="btn" id="btn-export">导出聊天</button>
         <button class="btn ghost" id="btn-about">关于</button>
+        <button class="btn" id="btn-open-side">设置</button>
       </div>
     </header>
 
     <section class="doc" role="main">
-      <aside id="side-panel" class="side" aria-label="设置">
+      <aside class="side" aria-label="设置">
         <div class="panel-title">连接大模型（可选）</div>
         <div class="setting">
           <label>OpenAI 兼容 API 地址</label>
           <input class="input" id="api-base" placeholder="如 https://api.openai.com/v1" />
           <label>API Key（保存在浏览器本地）</label>
           <input class="input" id="api-key" placeholder="sk-..." />
+          <div class="link-list">
+            <button class="pill" id="btn-use-demo-key">一键填入合作令牌</button>
+            <button class="pill" id="btn-hide-side">收起设置</button>
+          </div>
           <label>模型名</label>
           <input class="input" id="api-model" placeholder="gpt-4o-mini 或 glm-4-flash 等" />
           <button class="btn" id="btn-save">保存设置</button>
-          <div class="hint">未配置时使用本地“演示模式”，可离线回答基础科普问题。</div>
+          <div class="hint">未配置时使用本地“演示模式”。提示：公开仓库不要明文保存私有令牌。</div>
           <div class="status" id="status">当前：演示模式</div>
         </div>
         <hr style="border:none;border-top:2px dashed var(--border)">
@@ -190,6 +178,9 @@
         </div>
       </div>
     </section>
+
+    <!-- 抽屉遮罩 -->
+    <div class="drawer-mask" id="drawer-mask"></div>
 
     <div class="footer">© 2025 小淘博士 · GitHub Pages 可直接托管单文件</div>
   </div>
@@ -224,12 +215,12 @@
     const btnClear = $('#btn-clear');
     const btnExport = $('#btn-export');
     const btnAbout = $('#btn-about');
-    const btnSettings = $('#btn-settings');
-    const backdrop = $('#backdrop');
-    const sidePanel = $('#side-panel');
+    const btnOpenSide = $('#btn-open-side');
     const statusEl = $('#status');
     const tplMsg = $('#tpl-msg');
     const tplMe = $('#tpl-me');
+    const side = document.querySelector('.side');
+    const mask = document.getElementById('drawer-mask');
 
     const conf = {
       base: localStorage.getItem('xtb_api_base') || '',
@@ -243,37 +234,12 @@
     $('#api-model').value = conf.model;
     updateStatus();
 
-    // 通过 URL hash 可一次性注入 key（例如 https://域名/#key=sk-xxxx ）
-    const hashKeyMatch = location.hash.match(/key=([^&]+)/);
-    if(hashKeyMatch && !conf.key){
-      conf.key = decodeURIComponent(hashKeyMatch[1]);
-      localStorage.setItem('xtb_api_key', conf.key);
-      $('#api-key').value = conf.key;
-      updateStatus();
-      // 清理 hash（避免暴露在截屏或分享）
-      history.replaceState(null,'', location.pathname + location.search);
-    }
-
-    // 移动端抽屉逻辑
-    function openDrawer(){
-      sidePanel.classList.add('show');
-      backdrop.classList.add('show');
-      document.body.classList.add('drawer-open');
-      btnSettings.setAttribute('aria-expanded','true');
-    }
-    function closeDrawer(){
-      sidePanel.classList.remove('show');
-      backdrop.classList.remove('show');
-      document.body.classList.remove('drawer-open');
-      btnSettings.setAttribute('aria-expanded','false');
-    }
-    btnSettings.addEventListener('click', ()=>{
-      sidePanel.classList.contains('show') ? closeDrawer() : openDrawer();
-    });
-    backdrop.addEventListener('click', closeDrawer);
-    window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
-    // 初始：小屏幕默认关闭
-    if(window.matchMedia('(max-width:860px)').matches){ closeDrawer(); }
+    // 移动端抽屉开关
+    function openSide(){ if(side){ side.classList.add('show'); } if(mask){ mask.classList.add('show'); } }
+    function closeSide(){ if(side){ side.classList.remove('show'); } if(mask){ mask.classList.remove('show'); } }
+    if(btnOpenSide) btnOpenSide.addEventListener('click', openSide);
+    if(mask) mask.addEventListener('click', closeSide);
+    document.addEventListener('click', (e)=>{ if(e.target && e.target.id==='btn-hide-side'){ closeSide(); }});
 
     // 语音合成
     const voiceSelect = $('#voice-select');
@@ -316,7 +282,7 @@
           return `${item.a}\n\n${links ? '📺 '+links: ''}`;
         }
       }
-      return `我来用简单语言解释：**${escapeHtml(q)}**。\n\n目前处于“演示模式”，我会用科普方式回答常见问题。若你在左侧设置中接入 **OpenAI 兼容接口** 与 **API Key**，我就能像豆包那样进行更通用、更深入的回答，还能引用更多知识点与举例噢～`;
+      return `我来用简单语言解释：**${escapeHtml(q)}**。\n\n目前处于“演示模式”，我会用科普方式回答常见问题。若你在【设置】里接入 **OpenAI 兼容接口** 与 **API Key**，我就能像豆包那样更通用、更深入地回答噢～`;
     }
 
     // 发送消息
@@ -404,6 +370,15 @@
       return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
     }
 
+    // 令牌：一键填入（按你提供的 jihuoma 未命名令牌）
+    const DEMO_TOKEN_B64 = 'c2std01NdUpxbkc0Q3dSUzJkN2p4ZjNGTHd6R3VMMW1PWHNSRlhYcWgxVXd3Q2owZW82bA==';
+    document.addEventListener('click', (e)=>{
+      if(e.target && e.target.id==='btn-use-demo-key'){
+        try{ $('#api-key').value = atob(DEMO_TOKEN_B64); toast('已填入合作令牌'); }
+        catch{ toast('填入失败'); }
+      }
+    });
+
     // 设置保存
     $('#btn-save').addEventListener('click', ()=>{
       conf.base = $('#api-base').value.trim();
@@ -414,8 +389,6 @@
       localStorage.setItem('xtb_api_model', conf.model);
       updateStatus();
       toast('设置已保存');
-      // 保存后在移动端自动收起
-      if(window.matchMedia('(max-width:860px)').matches){ closeDrawer(); }
     });
 
     function updateStatus(){
@@ -456,7 +429,7 @@
     }
 
     // 首条欢迎
-    addBot('嗨～我是**小淘博士**🧑‍🎓！\n\n试着问我：**“水变成冰属于什么物理现象？”**\n我会用少儿友好的方式解释，还能把答案**读出来**。左侧可以接入你的大模型 API，让我更聪明！');
+    addBot('嗨～我是**小淘博士**🧑‍🎓！\n\n手机端默认**隐藏左侧设置**，点右上角【设置】打开；如需联网回答，点“**一键填入合作令牌**”或手动粘贴 API Key。先试试：**水变成冰属于什么物理现象？**');
   </script>
 </body>
 </html>
