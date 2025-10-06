@@ -141,7 +141,7 @@
           <label>OpenAI 兼容 API 地址</label>
           <input class="input" id="api-base" placeholder="如 https://api.openai.com/v1" />
           <label>API Key（保存在浏览器本地）</label>
-          <input class="input" id="api-key" placeholder="sk-wMuJqnG4CwRS2d7jxf3FLwzGuL1mOXsRFXXqh1UwwCj0eo6l" />
+          <input class="input" id="api-key" placeholder="sk-" />
           <div class="link-list">
             <button class="pill" id="btn-use-demo-key">一键填入合作令牌</button>
             <button class="pill" id="btn-hide-side">收起设置</button>
