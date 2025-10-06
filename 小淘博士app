@@ -100,22 +100,6 @@
 
     .footer{font-size:12px; color:var(--muted); text-align:center; padding-bottom:6px}
     .sr{position:absolute; left:-9999px}
-
-    /* 响应式：移动端隐藏左栏，抽屉模式 */
-    @media (max-width: 860px){
-      .app{padding:10px}
-      .doc{flex-direction:column}
-      .side{
-        display:none; position:fixed; right:0; top:0; bottom:0;
-        width:min(92vw,340px); z-index:50; box-shadow:-8px 0 24px rgba(0,0,0,.12)
-      }
-      .side.show{display:flex}
-      .drawer-mask{position:fixed; inset:0; background:rgba(0,0,0,.28); z-index:40; display:none}
-      .drawer-mask.show{display:block}
-      .header-actions .btn.secondary{display:none}
-      #btn-open-side{display:inline-flex}
-    }
-    #btn-open-side{display:none; align-items:center; gap:6px}
   </style>
 </head>
 <body>
@@ -130,7 +114,6 @@
         <button class="btn secondary" id="btn-clear">清空对话</button>
         <button class="btn" id="btn-export">导出聊天</button>
         <button class="btn ghost" id="btn-about">关于</button>
-        <button class="btn" id="btn-open-side">设置</button>
       </div>
     </header>
 
@@ -141,15 +124,11 @@
           <label>OpenAI 兼容 API 地址</label>
           <input class="input" id="api-base" placeholder="如 https://api.openai.com/v1" />
           <label>API Key（保存在浏览器本地）</label>
-          <input class="input" id="api-key" placeholder="sk-" />
-          <div class="link-list">
-            <button class="pill" id="btn-use-demo-key">一键填入合作令牌</button>
-            <button class="pill" id="btn-hide-side">收起设置</button>
-          </div>
+          <input class="input" id="api-key" placeholder="sk-..." />
           <label>模型名</label>
           <input class="input" id="api-model" placeholder="gpt-4o-mini 或 glm-4-flash 等" />
           <button class="btn" id="btn-save">保存设置</button>
-          <div class="hint">未配置时使用本地“演示模式”。提示：公开仓库不要明文保存私有令牌。</div>
+          <div class="hint">未配置时使用本地“演示模式”，可离线回答基础科普问题。</div>
           <div class="status" id="status">当前：演示模式</div>
         </div>
         <hr style="border:none;border-top:2px dashed var(--border)">
@@ -178,9 +157,6 @@
         </div>
       </div>
     </section>
-
-    <!-- 抽屉遮罩 -->
-    <div class="drawer-mask" id="drawer-mask"></div>
 
     <div class="footer">© 2025 小淘博士 · GitHub Pages 可直接托管单文件</div>
   </div>
@@ -215,12 +191,9 @@
     const btnClear = $('#btn-clear');
     const btnExport = $('#btn-export');
     const btnAbout = $('#btn-about');
-    const btnOpenSide = $('#btn-open-side');
     const statusEl = $('#status');
     const tplMsg = $('#tpl-msg');
     const tplMe = $('#tpl-me');
-    const side = document.querySelector('.side');
-    const mask = document.getElementById('drawer-mask');
 
     const conf = {
       base: localStorage.getItem('xtb_api_base') || '',
@@ -233,13 +206,6 @@
     $('#api-key').value = conf.key;
     $('#api-model').value = conf.model;
     updateStatus();
-
-    // 移动端抽屉开关
-    function openSide(){ if(side){ side.classList.add('show'); } if(mask){ mask.classList.add('show'); } }
-    function closeSide(){ if(side){ side.classList.remove('show'); } if(mask){ mask.classList.remove('show'); } }
-    if(btnOpenSide) btnOpenSide.addEventListener('click', openSide);
-    if(mask) mask.addEventListener('click', closeSide);
-    document.addEventListener('click', (e)=>{ if(e.target && e.target.id==='btn-hide-side'){ closeSide(); }});
 
     // 语音合成
     const voiceSelect = $('#voice-select');
@@ -282,7 +248,7 @@
           return `${item.a}\n\n${links ? '📺 '+links: ''}`;
         }
       }
-      return `我来用简单语言解释：**${escapeHtml(q)}**。\n\n目前处于“演示模式”，我会用科普方式回答常见问题。若你在【设置】里接入 **OpenAI 兼容接口** 与 **API Key**，我就能像豆包那样更通用、更深入地回答噢～`;
+      return `我来用简单语言解释：**${escapeHtml(q)}**。\n\n目前处于“演示模式”，我会用科普方式回答常见问题。若你在左侧设置中接入 **OpenAI 兼容接口** 与 **API Key**，我就能像豆包那样进行更通用、更深入的回答，还能引用更多知识点与举例噢～`;
     }
 
     // 发送消息
@@ -370,15 +336,6 @@
       return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
     }
 
-    // 令牌：一键填入（按你提供的 jihuoma 未命名令牌）
-    const DEMO_TOKEN_B64 = 'c2std01NdUpxbkc0Q3dSUzJkN2p4ZjNGTHd6R3VMMW1PWHNSRlhYcWgxVXd3Q2owZW82bA==';
-    document.addEventListener('click', (e)=>{
-      if(e.target && e.target.id==='btn-use-demo-key'){
-        try{ $('#api-key').value = atob(DEMO_TOKEN_B64); toast('已填入合作令牌'); }
-        catch{ toast('填入失败'); }
-      }
-    });
-
     // 设置保存
     $('#btn-save').addEventListener('click', ()=>{
       conf.base = $('#api-base').value.trim();
@@ -429,7 +386,7 @@
     }
 
     // 首条欢迎
-    addBot('嗨～我是**小淘博士**🧑‍🎓！\n\n手机端默认**隐藏左侧设置**，点右上角【设置】打开；如需联网回答，点“**一键填入合作令牌**”或手动粘贴 API Key。先试试：**水变成冰属于什么物理现象？**');
+    addBot('嗨～我是**小淘博士**🧑‍🎓！\n\n试着问我：**“水变成冰属于什么物理现象？”**\n我会用少儿友好的方式解释，还能把答案**读出来**。左侧可以接入你的大模型 API，让我更聪明！');
   </script>
 </body>
 </html>
