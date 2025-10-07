@@ -192,7 +192,8 @@
     const conf = {
       base: localStorage.getItem('xtb_api_base') || 'https://api.deerapi.com',
       key: localStorage.getItem('xtb_api_key') || '',
-      model: localStorage.getItem('xtb_api_model') || ''
+      // 默认模型名：若未设置则使用 gpt-4o-mini
+      model: localStorage.getItem('xtb_api_model') || 'gpt-4o-mini'
     };
 
     /*
