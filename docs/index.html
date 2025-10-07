@@ -35,7 +35,7 @@
     }
     .brand{display:flex; align-items:center; gap:10px}
     .brand h1{margin:0; font-size:20px; font-weight:800; letter-spacing: .5px}
-    .tag{font-size:12px; color:#6b4c00; background:#FFF2CC; border:1px dashed #E6C152; padding:4px 8px; border-radius:999px}
+  /* 标签样式已移除（精简界面） */
     .header-actions{margin-left:auto; display:flex; align-items:center; gap:8px}
     .btn{appearance:none; border:none; cursor:pointer; padding:8px 12px; border-radius:12px; font-weight:700; background:var(--orange); color:#fff; box-shadow:0 4px 10px rgba(251,140,0,.25); transition:.2s}
     .btn:hover{transform:translateY(-1px); background:var(--orange-deep)}
@@ -125,7 +125,7 @@
       <div class="brand">
         <div class="sunflower" aria-hidden="true"></div>
         <h1>小淘博士 · 知识科普</h1>
-        <span class="tag">向日葵橘 · 青少年友好</span>
+  <!-- 精简：去除副标题标签 -->
       </div>
       <div class="header-actions">
         <button class="btn secondary" id="btn-clear">清空对话</button>
@@ -150,8 +150,8 @@
           <label>模型名</label>
           <input class="input" id="api-model" placeholder="gpt-4o-mini 或 glm-4-flash 等" />
           <button class="btn" id="btn-save">保存设置</button>
-          <div class="hint">未配置时使用本地“演示模式”，可离线回答基础科普问题。提示：公开仓库不要明文保存私有令牌。</div>
-          <div class="hint danger">⚠ 当前页面包含演示密钥（任何访客都能查看/调用）。正式环境请删除或改为运行时注入，以防滥用与额度消耗。</div>
+          <div class="hint">未设置即本地演示；配置后走 API。</div>
+          <div class="hint danger">⚠ 演示密钥公开，勿用于正式用途。</div>
           <div class="status" id="status">当前：演示模式</div>
         </div>
         <hr style="border:none;border-top:2px dashed var(--border)">
@@ -162,12 +162,10 @@
           <div class="hint">使用浏览器自带语音合成，移动端兼容性视设备而定。</div>
         </div>
         <hr style="border:none;border-top:2px dashed var(--border)">
-        <div class="panel-title">快速示例</div>
+        <div class="panel-title">示例</div>
         <div class="link-list">
-          <button class="pill ex">水变成冰属于什么物理现象？</button>
           <button class="pill ex">为什么天空是蓝色的？</button>
-          <button class="pill ex">火山为什么会喷发？</button>
-          <button class="pill ex">什么是光合作用？</button>
+          <button class="pill ex">光合作用是什么？</button>
         </div>
       </aside>
 
@@ -442,7 +440,7 @@
     }
 
     // 首条欢迎
-    addBot('嗨～我是**小淘博士**🧑‍🎓！\n\n手机端默认**隐藏左侧设置**，点右上角【设置】打开；如需联网回答，点“**一键填入合作令牌**”或手动粘贴 API Key。先试试：**水变成冰属于什么物理现象？**');
+  addBot('你好，我是小淘博士。直接输入你的问题。');
   </script>
 </body>
 </html>
