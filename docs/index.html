@@ -63,11 +63,8 @@
 
     .main{flex:1; display:flex; flex-direction:column}
     .chat{
-      flex:1; padding:14px; overflow:auto; position:relative; background:#faf6ec;
+      flex:1; padding:14px; overflow:auto; background:linear-gradient(180deg,#FFFDF6 0%, #FFF8E6 100%);
     }
-    .chat::before{content:""; position:absolute; inset:0; background:url(ui.png) center/cover no-repeat; filter:blur(14px) brightness(1.05) saturate(1.1); transform:scale(1.08); z-index:0;}
-    .chat::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,248,230,.78),rgba(255,248,230,.88)); z-index:1;}
-  .chat > *{position:relative; z-index:2}
     .bubble-row{display:flex; gap:10px; margin:10px 0}
     .bubble{max-width:70%; padding:12px 14px; border-radius:16px; border:1px solid var(--border); background:var(--bubble); box-shadow:0 4px 10px rgba(255,183,77,.18)}
     .me{margin-left:auto}
