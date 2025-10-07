@@ -193,7 +193,7 @@
   const voiceEnabled = $('#voice-enabled');
 
     const conf = {
-      base: localStorage.getItem('xtb_api_base') || '',
+      base: localStorage.getItem('xtb_api_base') || 'https://api.deerapi.com',
       key: localStorage.getItem('xtb_api_key') || '',
       model: localStorage.getItem('xtb_api_model') || ''
     };
@@ -210,7 +210,7 @@
     }
 
     // 初始化 UI
-    $('#api-base').value = conf.base;
+  $('#api-base').value = conf.base || 'https://api.deerapi.com';
     $('#api-key').value = conf.key;
     $('#api-model').value = conf.model;
     updateStatus();
