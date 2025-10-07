@@ -126,6 +126,7 @@
           <div class="hint">未设置即本地演示；配置后走 API。</div>
           <div class="hint danger">⚠ 演示密钥公开，勿用于正式用途。</div>
           <div class="status" id="status">当前：演示模式</div>
+          <button class="pill" id="btn-test-api" style="align-self:flex-start;">测试接口</button>
         </div>
         <hr style="border:none;border-top:2px dashed var(--border)">
         <div class="panel-title">语音设置</div>
@@ -285,7 +286,7 @@
         replaceLastBot(answer);
         speak(stripMd(answer));
       }catch(e){
-        replaceLastBot(`❌ 出错啦：${e.message||e}`);
+        replaceLastBot(`❌ 出错啦：${(e&&e.message)||e}\n提示：若多次出现，可点“测试接口”查看是否缺少 /v1 或 Token 无效。`);
       }
       scrollToEnd();
     }
@@ -295,7 +296,7 @@
 
     // LLM 接入（OpenAI 兼容）
     async function llmAnswer(q){
-      const url = conf.base.replace(/\/$/, '') + '/chat/completions';
+      const url = buildChatUrl();
       const sysPrompt = `你是“**小淘博士**”，一位面向 8-16 岁青少年的科普助教。用简洁、友好、比喻+例子的方式回答。要求：\n1) 先给出**直接答案**；\n2) 再用 2-4 句话解释原因；\n3) 如合适，附上 1-2 条**延伸思考**（用条目符号）；\n4) 保持积极、鼓励的语气；\n5) 避免成人黑话与缩写，数学/物理公式尽量简化；\n6) 若涉及危险实验，提醒安全注意事项。`;
       const body = {
         model: conf.model,
@@ -310,13 +311,77 @@
         headers:{ 'Content-Type':'application/json', 'Authorization': `Bearer ${conf.key}` },
         body: JSON.stringify(body)
       });
-      if(!res.ok){
-        const t = await res.text();
-        throw new Error(`接口返回 ${res.status}: ${t}`);
+      const ctype = res.headers.get('content-type')||'';
+      if(!ctype.includes('application/json')){
+        const textSnippet = (await res.text()).slice(0,500);
+        throw new Error(`返回非 JSON（可能 API 路径缺少 /v1 或被 CDN/HTML 网关拦截）\n${textSnippet}`);
       }
-      const data = await res.json();
+      const data = await res.json().catch(()=>{ throw new Error('JSON 解析失败'); });
+      if(!res.ok){
+        // DeerAPI 401 场景：未提供或无效 token
+        const errMsg = data?.error?.message || `HTTP ${res.status}`;
+        if(res.status === 401){
+          throw new Error(`鉴权失败：${errMsg}\n请检查：1) Token 是否正确；2) 是否留空多余空格；3) Base 是否含 /v1（本页面会自动补）`);
+        }
+        throw new Error(`接口错误：${errMsg}`);
+      }
       const txt = data.choices?.[0]?.message?.content?.trim();
       return txt || '（没有返回内容）';
+    }
+
+    // 构造统一基础 URL，自动补 /v1（若用户已经写入则不重复）
+    function normalizeBase(){
+      let b = (conf.base||'').trim();
+      if(!b) return '';
+      // 去掉末尾斜杠
+      b = b.replace(/\/$/, '');
+      // 若不含 /v1/chat 或 /v1/completions 等特征且末段不是 v1，则补一个 /v1
+      if(!/\/v1($|\/)/.test(b)) b += '/v1';
+      return b;
+    }
+    function buildChatUrl(){
+      const base = normalizeBase();
+      if(!base) return '';
+      // OpenAI 兼容：/chat/completions
+      return base + '/chat/completions';
+    }
+
+    // 接口测试按钮：尝试 GET /v1/models（或 openai 兼容返回 401 JSON 即表示连通）
+    document.getElementById('btn-test-api').addEventListener('click', testApiConnectivity);
+    async function testApiConnectivity(){
+      const baseBefore = conf.base = document.getElementById('api-base').value.trim() || conf.base;
+      const keyBefore = conf.key = document.getElementById('api-key').value.trim() || conf.key;
+      if(!baseBefore){ toast('请先填写 Base'); return; }
+      const base = normalizeBase();
+      const url = base + '/models';
+      let detail = '';
+      try{
+        const r = await fetch(url, { headers: keyBefore? {Authorization:`Bearer ${keyBefore}`} : {} });
+        const ct = r.headers.get('content-type')||'';
+        let bodyText = '';
+        if(ct.includes('application/json')){
+          const j = await r.json().catch(()=>({}));
+          bodyText = JSON.stringify(j).slice(0,300);
+        }else{
+          bodyText = (await r.text()).slice(0,200);
+        }
+        if(r.status === 401){
+          toast('连接成功，但鉴权 401（说明路径正确，需要有效 Token）');
+          detail = '路径正确：收到 401 JSON，表示服务器识别了你的请求。请确认密钥有效。';
+        }else if(r.ok){
+          toast('连接成功');
+          detail = 'HTTP '+r.status+' \n'+bodyText;
+        }else{
+          toast('收到响应：'+r.status);
+          detail = '状态：'+r.status+'\n'+bodyText;
+        }
+      }catch(err){
+        detail = '请求失败：'+err.message;
+        toast('网络/跨域错误');
+      }
+      // 在聊天区域插入结果
+      addBot('【测试结果】\nBase: '+normalizeBase()+'\n'+detail);
+      scrollToEnd();
     }
 
     // DOM 工具
