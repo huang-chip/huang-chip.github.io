@@ -196,6 +196,8 @@
       // 默认模型名：若未设置则使用 gpt-4o-mini
       model: localStorage.getItem('xtb_api_model') || 'gpt-4o-mini'
     };
+    // 标记：只有测试成功后才真正启用 API 调用
+    let apiReachable = false;
 
     /*
       安全提示：你显式要求内置默认 API Key。任何人查看网页源代码都能获取该 Key，存在滥用与额度消耗风险。
@@ -281,7 +283,7 @@
       scrollToEnd();
 
       try{
-        const useApi = conf.base && conf.key && conf.model;
+        const useApi = apiReachable && conf.base && conf.key && conf.model;
         const answer = useApi ? await llmAnswer(text) : localAnswer(text);
         replaceLastBot(answer);
         speak(stripMd(answer));
@@ -349,38 +351,46 @@
     // 接口测试按钮：尝试 GET /v1/models（或 openai 兼容返回 401 JSON 即表示连通）
     document.getElementById('btn-test-api').addEventListener('click', testApiConnectivity);
     async function testApiConnectivity(){
-      const baseBefore = conf.base = document.getElementById('api-base').value.trim() || conf.base;
-      const keyBefore = conf.key = document.getElementById('api-key').value.trim() || conf.key;
-      if(!baseBefore){ toast('请先填写 Base'); return; }
-      const base = normalizeBase();
-      const url = base + '/models';
+      const baseInput = document.getElementById('api-base').value.trim();
+      const keyInput = document.getElementById('api-key').value.trim();
+      const modelInput = document.getElementById('api-model').value.trim();
+      if(!baseInput){ toast('请先填写 Base'); return; }
+      // 临时不写入 conf，先测试
+      const tempBase = baseInput.replace(/\/$/,'');
+      let probeBase = tempBase;
+      if(!/\/v1($|\/)/.test(probeBase)) probeBase += '/v1';
+      const url = probeBase + '/models';
       let detail = '';
+      let success = false;
       try{
-        const r = await fetch(url, { headers: keyBefore? {Authorization:`Bearer ${keyBefore}`} : {} });
+        const r = await fetch(url, { headers: keyInput? {Authorization:`Bearer ${keyInput}`, 'Accept':'application/json'} : {'Accept':'application/json'} });
         const ct = r.headers.get('content-type')||'';
-        let bodyText = '';
+        let jsonObj = null; let bodyText='';
         if(ct.includes('application/json')){
-          const j = await r.json().catch(()=>({}));
-          bodyText = JSON.stringify(j).slice(0,300);
+          jsonObj = await r.json().catch(()=>null);
+          bodyText = JSON.stringify(jsonObj||{}).slice(0,300);
         }else{
           bodyText = (await r.text()).slice(0,200);
         }
-        if(r.status === 401){
-          toast('连接成功，但鉴权 401（说明路径正确，需要有效 Token）');
-          detail = '路径正确：收到 401 JSON，表示服务器识别了你的请求。请确认密钥有效。';
+        if(r.status === 401 && ct.includes('application/json')){
+          toast('路径正确（401 鉴权）');
+          detail = '路径正确：收到 401 JSON，说明已到达服务；请提供有效密钥后点“保存设置”再发送。';
+          success = true; // 401 也算通路成功
         }else if(r.ok){
           toast('连接成功');
-          detail = 'HTTP '+r.status+' \n'+bodyText;
+            detail = 'HTTP '+r.status+'\n'+bodyText;
+          success = true;
         }else{
-          toast('收到响应：'+r.status);
+          toast('收到状态：'+r.status);
           detail = '状态：'+r.status+'\n'+bodyText;
         }
       }catch(err){
-        detail = '请求失败：'+err.message;
+        detail = '请求失败（可能 CORS 或网络）：'+err.message+'\n如果是浏览器控制台 CORS 报错，需要加代理。';
         toast('网络/跨域错误');
       }
-      // 在聊天区域插入结果
-      addBot('【测试结果】\nBase: '+normalizeBase()+'\n'+detail);
+      apiReachable = success && !!keyInput && !!modelInput; // 只有有 key+model 且通路才允许启用
+      addBot('【测试结果】\nBase: '+probeBase+'\n'+detail+ (apiReachable? '\n判定：✅ 可启用 API 模式（记得点保存）' : '\n判定：保持演示模式')); 
+      updateStatus();
       scrollToEnd();
     }
 
@@ -440,9 +450,10 @@
     });
 
     function updateStatus(){
-      const useApi = conf.base && conf.key && conf.model;
+      const useApi = apiReachable && conf.base && conf.key && conf.model;
       statusEl.textContent = '当前：' + (useApi ? `API 模式（${conf.model}）` : '演示模式');
       statusEl.style.color = useApi ? 'var(--success)' : 'var(--muted)';
+      if(!useApi) statusEl.title = 'API 未启用：需测试成功并保存配置';
     }
 
     // 示例填充
