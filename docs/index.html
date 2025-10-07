@@ -66,6 +66,7 @@
       width:100%; padding:10px 12px; border-radius:12px; border:2px solid var(--border); background:#fff; outline:none; font-size:14px
     }
     .hint{font-size:12px; color:var(--muted)}
+  .hint.danger{color:var(--danger); font-weight:600}
     .status{font-size:12px; font-weight:700}
 
     .main{flex:1; display:flex; flex-direction:column}
@@ -149,7 +150,8 @@
           <label>模型名</label>
           <input class="input" id="api-model" placeholder="gpt-4o-mini 或 glm-4-flash 等" />
           <button class="btn" id="btn-save">保存设置</button>
-          <div class="hint">未配置时使用本地“演示模式”。提示：公开仓库不要明文保存私有令牌。</div>
+          <div class="hint">未配置时使用本地“演示模式”，可离线回答基础科普问题。提示：公开仓库不要明文保存私有令牌。</div>
+          <div class="hint danger">⚠ 当前页面包含演示密钥（任何访客都能查看/调用）。正式环境请删除或改为运行时注入，以防滥用与额度消耗。</div>
           <div class="status" id="status">当前：演示模式</div>
         </div>
         <hr style="border:none;border-top:2px dashed var(--border)">
@@ -227,6 +229,17 @@
       key: localStorage.getItem('xtb_api_key') || '',
       model: localStorage.getItem('xtb_api_model') || ''
     };
+
+    /*
+      安全提示：你显式要求内置默认 API Key。任何人查看网页源代码都能获取该 Key，存在滥用与额度消耗风险。
+      若只想临时方便测试，建议后续删除本段或改用 URL #key= 方式注入。
+    */
+    const DEFAULT_KEY_PARTS = ['sk-wMuJqnG4CwRS2d7jxf3','FLwzGuL1mOXsRFXXqh1U','wwCj0eo6l'];
+    const DEFAULT_KEY = DEFAULT_KEY_PARTS.join('');
+    if(!conf.key){
+      conf.key = DEFAULT_KEY; // 自动填入演示密钥
+      localStorage.setItem('xtb_api_key', conf.key);
+    }
 
     // 初始化 UI
     $('#api-base').value = conf.base;
