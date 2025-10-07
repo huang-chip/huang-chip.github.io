@@ -42,16 +42,8 @@
     .btn.secondary{background:#fff; color:#8B5E00; border:2px solid var(--border); box-shadow:none}
     .btn.ghost{background:transparent; color:#8B5E00}
 
-    .sunflower{
-      width:44px; height:44px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #FFD54F, #FFB300 70%);
-      border:2px solid #F4C65A; position:relative; display:grid; place-items:center; overflow:hidden;
-    }
-    .sunflower:before, .sunflower:after{
-      content:""; position:absolute; width:80px; height:80px; border-radius:50%;
-      background: conic-gradient(from 0deg, #FFB74D, #FFC76A, #FFE082, #FFB74D);
-      z-index:0; opacity:.65; animation:spin 14s linear infinite;
-    }
-    .sunflower:after{animation-direction: reverse; opacity:.5}
+    .sunflower{width:44px; height:44px; border-radius:50%; border:2px solid #F4C65A; overflow:hidden; display:block;}
+    .sunflower img{width:100%;height:100%;display:block;object-fit:cover;}
     @keyframes spin{to{transform:rotate(1turn)}}
 
     .doc{
@@ -102,39 +94,30 @@
     .footer{font-size:12px; color:var(--muted); text-align:center; padding-bottom:6px}
     .sr{position:absolute; left:-9999px}
 
-    /* 响应式：移动端隐藏左栏，抽屉模式 */
+    /* 响应式：保留清空按钮即可，侧栏始终显示 */
     @media (max-width: 860px){
       .app{padding:10px}
       .doc{flex-direction:column}
-      .side{
-        display:none; position:fixed; right:0; top:0; bottom:0;
-        width:min(92vw,340px); z-index:50; box-shadow:-8px 0 24px rgba(0,0,0,.12)
-      }
-      .side.show{display:flex}
-      .drawer-mask{position:fixed; inset:0; background:rgba(0,0,0,.28); z-index:40; display:none}
-      .drawer-mask.show{display:block}
-      .header-actions .btn.secondary{display:none}
-      #btn-open-side{display:inline-flex}
+      .side{width:100%; border-right:none; border-bottom:2px solid var(--border); flex-direction:row; flex-wrap:wrap; gap:8px}
+      .panel-title{flex-basis:100%;}
     }
-    #btn-open-side{display:none; align-items:center; gap:6px}
   </style>
 </head>
 <body>
   <div class="app">
     <header class="header">
       <div class="brand">
-        <div class="sunflower" aria-hidden="true"></div>
+  <div class="sunflower" aria-hidden="true"><img src="ui.png" alt="logo"/></div>
         <h1>小淘博士 · 知识科普</h1>
   <!-- 精简：去除副标题标签 -->
       </div>
       <div class="header-actions">
         <button class="btn secondary" id="btn-clear">清空对话</button>
-        <button class="btn" id="btn-open-side">设置</button>
       </div>
     </header>
 
     <section class="doc" role="main">
-      <aside class="side" aria-label="设置">
+  <aside class="side" aria-label="设置" style="display:block;">
         <div class="panel-title">连接大模型（可选）</div>
         <div class="setting">
           <label>OpenAI 兼容 API 地址</label>
@@ -143,7 +126,6 @@
           <input class="input" id="api-key" placeholder="sk-..." />
           <div class="link-list">
             <button class="pill" id="btn-use-demo-key">一键填入合作令牌</button>
-            <button class="pill" id="btn-hide-side">收起设置</button>
           </div>
           <label>模型名</label>
           <input class="input" id="api-model" placeholder="gpt-4o-mini 或 glm-4-flash 等" />
@@ -177,8 +159,7 @@
       </div>
     </section>
 
-    <!-- 抽屉遮罩 -->
-    <div class="drawer-mask" id="drawer-mask"></div>
+  <!-- 遮罩与抽屉逻辑已移除 -->
 
     <div class="footer">© 2025 小淘博士 · GitHub Pages 可直接托管单文件</div>
   </div>
@@ -212,12 +193,11 @@
     const sendBtn = $('#send');
     const btnClear = $('#btn-clear');
   // 已移除导出与关于按钮，相关变量删除
-    const btnOpenSide = $('#btn-open-side');
+  // 设置按钮已移除
     const statusEl = $('#status');
     const tplMsg = $('#tpl-msg');
     const tplMe = $('#tpl-me');
-    const side = document.querySelector('.side');
-    const mask = document.getElementById('drawer-mask');
+  const side = document.querySelector('.side');
 
     const conf = {
       base: localStorage.getItem('xtb_api_base') || '',
@@ -242,12 +222,7 @@
     $('#api-model').value = conf.model;
     updateStatus();
 
-    // 移动端抽屉开关
-    function openSide(){ if(side){ side.classList.add('show'); } if(mask){ mask.classList.add('show'); } }
-    function closeSide(){ if(side){ side.classList.remove('show'); } if(mask){ mask.classList.remove('show'); } }
-    if(btnOpenSide) btnOpenSide.addEventListener('click', openSide);
-    if(mask) mask.addEventListener('click', closeSide);
-    document.addEventListener('click', (e)=>{ if(e.target && e.target.id==='btn-hide-side'){ closeSide(); }});
+  // 抽屉逻辑已删除，侧栏固定显示
 
     // 语音合成
     const voiceSelect = $('#voice-select');
