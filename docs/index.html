@@ -69,19 +69,8 @@
     .bubble{max-width:70%; padding:12px 14px; border-radius:16px; border:1px solid var(--border); background:var(--bubble); box-shadow:0 4px 10px rgba(255,183,77,.18)}
     .me{margin-left:auto}
     .bubble.me{background:var(--bubble-me)}
-    .avatar{
-      width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:#fff; border:2px solid var(--border)
-    }
-
-    /* 小博士形象：白脸+黑色博士帽 */
-    .mascot{position:relative; width:40px; height:40px}
-    .hat{position:absolute; top:-6px; left:4px; width:32px; height:12px; background:#111; border-radius:3px 3px 0 0}
-    .hat:after{content:""; position:absolute; top:10px; left:3px; width:26px; height:3px; background:#111; border-radius:2px}
-    .face{position:absolute; bottom:0; left:5px; width:30px; height:26px; background:#fff; border:2px solid var(--border); border-radius:14px}
-    .eye{position:absolute; width:4px; height:4px; background:#111; border-radius:50%}
-    .eye.l{left:8px; top:9px}
-    .eye.r{right:8px; top:9px}
-    .smile{position:absolute; left:50%; transform:translateX(-50%); bottom:6px; width:12px; height:6px; border:2px solid #111; border-top:none; border-radius:0 0 8px 8px}
+    .avatar{width:40px; height:40px; border-radius:50%; overflow:hidden; border:2px solid var(--border); display:block}
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
 
     .composer{display:flex; gap:8px; padding:12px; border-top:2px solid var(--border); background:#fff}
     .composer .input{flex:1}
@@ -166,16 +155,7 @@
 
   <template id="tpl-msg">
     <div class="bubble-row">
-      <div class="avatar">
-        <div class="mascot">
-          <div class="hat"></div>
-          <div class="face">
-            <div class="eye l"></div>
-            <div class="eye r"></div>
-            <div class="smile"></div>
-          </div>
-        </div>
-      </div>
+      <div class="avatar"><img src="ui.png" alt="bot"/></div>
       <div class="bubble"></div>
     </div>
   </template>
