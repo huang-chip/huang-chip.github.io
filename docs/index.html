@@ -122,11 +122,10 @@
           </div>
           <label>模型名</label>
           <input class="input" id="api-model" placeholder="gpt-4o-mini 或 glm-4-flash 等" />
-          <button class="btn" id="btn-save">保存设置</button>
+          <button class="btn" id="btn-save">保存并测试</button>
           <div class="hint">未设置即本地演示；配置后走 API。</div>
           <div class="hint danger">⚠ 演示密钥公开，勿用于正式用途。</div>
           <div class="status" id="status">当前：演示模式</div>
-          <button class="pill" id="btn-test-api" style="align-self:flex-start;">测试接口</button>
         </div>
         <hr style="border:none;border-top:2px dashed var(--border)">
         <div class="panel-title">语音设置</div>
@@ -349,7 +348,6 @@
     }
 
     // 接口测试按钮：尝试 GET /v1/models（或 openai 兼容返回 401 JSON 即表示连通）
-    document.getElementById('btn-test-api').addEventListener('click', testApiConnectivity);
     async function testApiConnectivity(){
       const baseInput = document.getElementById('api-base').value.trim();
       const keyInput = document.getElementById('api-key').value.trim();
@@ -438,7 +436,10 @@
     });
 
     // 设置保存
-    $('#btn-save').addEventListener('click', ()=>{
+    $('#btn-save').addEventListener('click', async ()=>{
+      const btn = $('#btn-save');
+      const originalText = btn.textContent;
+      btn.disabled = true; btn.textContent = '保存中…';
       conf.base = $('#api-base').value.trim();
       conf.key = $('#api-key').value.trim();
       conf.model = $('#api-model').value.trim();
@@ -446,7 +447,9 @@
       localStorage.setItem('xtb_api_key', conf.key);
       localStorage.setItem('xtb_api_model', conf.model);
       updateStatus();
-      toast('设置已保存');
+      toast('已保存，开始测试…');
+      try{ await testApiConnectivity(); }
+      finally{ btn.disabled = false; btn.textContent = originalText; }
     });
 
     function updateStatus(){
