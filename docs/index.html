@@ -129,8 +129,6 @@
       </div>
       <div class="header-actions">
         <button class="btn secondary" id="btn-clear">清空对话</button>
-        <button class="btn" id="btn-export">导出聊天</button>
-        <button class="btn ghost" id="btn-about">关于</button>
         <button class="btn" id="btn-open-side">设置</button>
       </div>
     </header>
@@ -213,8 +211,7 @@
     const ask = $('#ask');
     const sendBtn = $('#send');
     const btnClear = $('#btn-clear');
-    const btnExport = $('#btn-export');
-    const btnAbout = $('#btn-about');
+  // 已移除导出与关于按钮，相关变量删除
     const btnOpenSide = $('#btn-open-side');
     const statusEl = $('#status');
     const tplMsg = $('#tpl-msg');
@@ -415,22 +412,7 @@
 
     // 清空与导出
     btnClear.addEventListener('click', ()=>{ chat.innerHTML = ''; toast('对话已清空'); });
-    btnExport.addEventListener('click', ()=>{
-      const lines = Array.from(chat.querySelectorAll('.bubble-row')).map(row=>{
-        const isMe = row.classList.contains('me');
-        const txt = row.querySelector('.bubble').innerText.replace(/\n+/g,'\n');
-        return (isMe? '我: ':'小淘博士: ') + txt;
-      }).join('\n\n');
-      const blob = new Blob([lines], {type:'text/plain;charset=utf-8'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob); a.download = '小淘博士_聊天记录.txt'; a.click();
-      URL.revokeObjectURL(a.href);
-    });
-
-    // 关于
-    btnAbout.addEventListener('click', ()=>{
-      toast('小淘博士：青少年科普问答 · 单文件版，可直接上传 GitHub Pages');
-    });
+    // 导出聊天与关于功能已精简移除
 
     // 简易 Toast
     function toast(msg){
