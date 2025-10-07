@@ -119,17 +119,9 @@
           <input class="input" id="api-key" placeholder="sk-..." />
           <div class="link-list">
             <button class="pill" id="btn-use-demo-key">一键填入合作令牌</button>
-            <button class="pill" id="btn-fetch-models">拉取模型</button>
           </div>
           <label>模型名</label>
           <input class="input" id="api-model" placeholder="gpt-4o-mini 或 glm-4-flash 等" />
-          <label style="margin-top:4px">温度 (0~2)</label>
-          <input class="input" id="api-temp" type="number" step="0.1" min="0" max="2" placeholder="默认 0.7" />
-          <label>最大 tokens (可留空)</label>
-          <input class="input" id="api-max-tokens" type="number" min="1" placeholder="如 1024" />
-          <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;">
-            <input type="checkbox" id="api-stream" checked style="transform:scale(1.05);accent-color:var(--orange);" /> 启用流式输出
-          </label>
           <button class="btn" id="btn-save">保存并测试</button>
           <div class="hint">未设置即本地演示；配置后走 API。</div>
           <div class="hint danger">⚠ 演示密钥公开，勿用于正式用途。</div>
@@ -203,9 +195,6 @@
       // 默认模型名：若未设置则使用 gpt-4o-mini
       model: localStorage.getItem('xtb_api_model') || 'gpt-4o-mini'
     };
-    conf.temperature = parseFloat(localStorage.getItem('xtb_api_temp')||'0.7') || 0.7;
-    conf.maxTokens = parseInt(localStorage.getItem('xtb_api_max_tokens')||'') || '';
-    conf.stream = (localStorage.getItem('xtb_api_stream')||'1') === '1';
     // 标记：只有测试成功后才真正启用 API 调用
     let apiReachable = false;
 
@@ -224,9 +213,6 @@
   $('#api-base').value = conf.base || 'https://api.deerapi.com';
     $('#api-key').value = conf.key;
     $('#api-model').value = conf.model;
-    $('#api-temp').value = conf.temperature;
-    if(conf.maxTokens) $('#api-max-tokens').value = conf.maxTokens;
-    $('#api-stream').checked = !!conf.stream;
     updateStatus();
 
   // 抽屉：移动端可展开/关闭
@@ -319,62 +305,14 @@
           {role:'system', content: sysPrompt},
           {role:'user', content: q}
         ],
-        temperature: conf.temperature || 0.7,
+        temperature: 0.7,
       };
-      if(conf.maxTokens) body.max_tokens = conf.maxTokens;
-      const doStream = !!conf.stream;
-      if(doStream) body.stream = true;
-
-      // 先替换“思考中…”为占位响应（若流式，将逐步填充）
-      let streamingBubble = null;
-      if(doStream){
-        const rows = chat.querySelectorAll('.bubble-row');
-        for(let i=rows.length-1;i>=0;i--){ if(!rows[i].classList.contains('me')){ streamingBubble = rows[i].querySelector('.bubble'); break; } }
-      }
       const res = await fetch(url, {
         method:'POST',
         headers:{ 'Content-Type':'application/json', 'Authorization': `Bearer ${conf.key}` },
         body: JSON.stringify(body)
       });
       const ctype = res.headers.get('content-type')||'';
-      // 流式：content-type 可能为 text/event-stream
-      if(doStream && /text\/event-stream/i.test(ctype)){
-        const reader = res.body.getReader();
-        const dec = new TextDecoder('utf-8');
-        let acc = '';
-        while(true){
-          const {done, value} = await reader.read();
-          if(done) break;
-            acc += dec.decode(value, {stream:true});
-          const lines = acc.split(/\n/);
-          // 保留最后一行（可能不完整）
-          acc = lines.pop();
-          for(const line of lines){
-            const trimmed = line.trim();
-            if(!trimmed.startsWith('data:')) continue;
-            const payload = trimmed.slice(5).trim();
-            if(payload === '[DONE]') { reader.cancel(); break; }
-            try{
-              const json = JSON.parse(payload);
-              const delta = json.choices?.[0]?.delta?.content || '';
-              if(delta){
-                if(streamingBubble){
-                  // 追加纯文本再简单 markdown 渲染（粗暴：重新渲染）
-                  const prev = streamingBubble.getAttribute('data-raw') || '';
-                  const nextRaw = prev + delta;
-                  streamingBubble.setAttribute('data-raw', nextRaw);
-                  streamingBubble.innerHTML = renderMarkdown(escapeHtml(nextRaw));
-                  scrollToEnd();
-                }
-              }
-            }catch{}
-          }
-        }
-        if(streamingBubble){
-          // 完成后返回最终文本
-          return streamingBubble.getAttribute('data-raw') || '(空)';
-        }
-      }
       if(!ctype.includes('application/json')){
         const textSnippet = (await res.text()).slice(0,500);
         throw new Error(`返回非 JSON（可能 API 路径缺少 /v1 或被 CDN/HTML 网关拦截）\n${textSnippet}`);
@@ -494,38 +432,8 @@
       if(e.target && e.target.id==='btn-use-demo-key'){
         try{ $('#api-key').value = atob(DEMO_TOKEN_B64); toast('已填入合作令牌'); }
         catch{ toast('填入失败'); }
-      } else if(e.target && e.target.id==='btn-fetch-models'){
-        fetchModels();
       }
     });
-
-    async function fetchModels(){
-      const baseInput = document.getElementById('api-base').value.trim() || conf.base;
-      if(!baseInput){ toast('请先填写 Base'); return; }
-      const keyInput = document.getElementById('api-key').value.trim() || conf.key;
-      if(!keyInput){ toast('请先填 Key'); return; }
-      let b = baseInput.replace(/\/$/,'');
-      if(!/\/v1($|\/)/.test(b)) b += '/v1';
-      try{
-        const r = await fetch(b + '/models', {headers:{Authorization:`Bearer ${keyInput}`}});
-        const ct = r.headers.get('content-type')||'';
-        if(!ct.includes('application/json')){ toast('返回非 JSON'); return; }
-        const j = await r.json();
-        const arr = j.data || j.models || [];
-        if(arr.length){
-          // 寻找第一个含 id 字段
-          const first = arr.find(m=>m.id)||arr[0];
-          if(first && first.id){
-            if(!$('#api-model').value) $('#api-model').value = first.id;
-            toast('模型列出：'+arr.slice(0,3).map(m=>m.id||m.name).join(','));
-          }else{
-            toast('未找到模型 id 字段');
-          }
-        }else{
-          toast('模型列表为空');
-        }
-      }catch(e){ toast('拉取失败:'+e.message); }
-    }
 
     // 设置保存
     $('#btn-save').addEventListener('click', async ()=>{
@@ -535,15 +443,9 @@
       conf.base = $('#api-base').value.trim();
       conf.key = $('#api-key').value.trim();
       conf.model = $('#api-model').value.trim();
-      conf.temperature = parseFloat($('#api-temp').value)||0.7;
-      conf.maxTokens = parseInt($('#api-max-tokens').value)||'';
-      conf.stream = $('#api-stream').checked;
       localStorage.setItem('xtb_api_base', conf.base);
       localStorage.setItem('xtb_api_key', conf.key);
       localStorage.setItem('xtb_api_model', conf.model);
-      localStorage.setItem('xtb_api_temp', String(conf.temperature));
-      if(conf.maxTokens) localStorage.setItem('xtb_api_max_tokens', String(conf.maxTokens)); else localStorage.removeItem('xtb_api_max_tokens');
-      localStorage.setItem('xtb_api_stream', conf.stream? '1':'0');
       updateStatus();
       toast('已保存，开始测试…');
       try{ await testApiConnectivity(); }
