@@ -1,0 +1,16 @@
+/* CSS 变量 - 颜色主题 */
+:root{
+  --orange:#FFA726;            /* 主色：向日葵橘 */
+  --orange-deep:#FB8C00;       /* 深橘 */
+  --yellow:#FFD54F;            /* 点缀黄 */
+  --bg:#FFF8E6;                /* 柔和背景 */
+  --card:#FFFFFF;              /* 卡片白 */
+  --text:#2B2B2B;              /* 主文字 */
+  --muted:#6B7280;             /* 次文字 */
+  --bubble:#FFFFFF;            /* 聊天气泡白 */
+  --bubble-me:#FFF0D9;         /* 我方气泡淡橘 */
+  --border: #F3D9A4;           /* 边线 */
+  --success:#22C55E;
+  --danger:#EF4444;
+}
+

@@ -859,10 +859,10 @@ jobs:
 
 | 序号 | 操作步骤 | 工具/方法 | 文件路径 | 状态 |
 |------|----------|----------|---------|------|
-| 1 | 准备原始图标 | 使用 docs/ui1.jpg 或设计新图标 | `public/ui1.jpg` | ⬜ 未完成 |
-| 2 | 生成 192x192 图标 | https://realfavicongenerator.net/ | `public/pwa-192x192.png` | ⬜ 未完成 |
-| 3 | 生成 512x512 图标 | 同上 | `public/pwa-512x512.png` | ⬜ 未完成 |
-| 4 | 生成 favicon.ico | 同上 | `public/favicon.ico` | ⬜ 未完成 |
+| 1 | 准备原始图标 | 使用 docs/ui1.jpg 或设计新图标 | `public/ui1.jpg` | 完成 |
+| 2 | 生成 192x192 图标 | https://realfavicongenerator.net/ | `public/pwa-192x192.png` | 完成 |
+| 3 | 生成 512x512 图标 | 同上 | `public/pwa-512x512.png` | 完成 |
+| 4 | 生成 favicon.ico | 同上 | `public/favicon.ico` | 完成 |
 
 ### 4. 环境变量文件配置
 
@@ -941,12 +941,12 @@ export default defineConfig({
 在开始自动化执行前，请确认以下项目已完成：
 
 - [x] 已填写完整的基础信息配置（仓库名、用户名等）
-- [ ] 已注册 Cloudflare 账号并创建 Worker
-- [ ] 已获取 Worker URL 并填写到环境变量
-- [ ] 已准备好 PWA 图标（至少 192x192 和 512x512）
-- [ ] 已创建 `.env.local` 文件并填写完整
-- [ ] 已确认 API 地址可访问（测试过接口连通性）
-- [ ] 已启用 GitHub Pages 和 Actions 权限（如使用自动部署）
+- [x] 已注册 Cloudflare 账号并创建 Worker
+- [x] 已获取 Worker URL 并填写到环境变量
+- [x] 已准备好 PWA 图标（至少 192x192 和 512x512）
+- [x] 已创建 `.env.local` 文件并填写完整
+- [x] 已确认 API 地址可访问（测试过接口连通性）
+- [ ] 已启用 GitHub Pages 和 Actions 权限（如使用自动部署）【暂时不做】
 
 **👉 完成以上准备后，回复"准备完成"，我将自动化执行后续步骤！**
 

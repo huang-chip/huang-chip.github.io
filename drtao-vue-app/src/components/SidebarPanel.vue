@@ -1,0 +1,84 @@
+<template>
+  <aside class="side" aria-label="设置">
+    <div class="panel-title">连接大模型</div>
+    <div class="setting">
+      <label>API 地址</label>
+      <input
+        v-model="configStore.apiBase"
+        class="input"
+        placeholder="如 https://api.openai.com/v1"
+      />
+      
+      <label>API Key（保存在浏览器本地）</label>
+      <input
+        v-model="configStore.apiKey"
+        class="input"
+        type="password"
+        placeholder="sk-..."
+      />
+      
+      <label>模型名</label>
+      <input
+        v-model="configStore.apiModel"
+        class="input"
+        placeholder="deepseek-chat"
+      />
+      
+      <button class="btn" @click="saveConfig">保存配置</button>
+      
+      <div class="hint">未设置即本地演示；配置后走 API。</div>
+      <div class="status" :class="statusClass">
+        {{ statusText }}
+      </div>
+    </div>
+
+    <hr style="border:none;border-top:2px dashed var(--border)" />
+
+    <div class="panel-title">语音设置</div>
+    <div class="setting">
+      <label style="display:flex;align-items:center;gap:6px">
+        <input
+          v-model="speechStore.enabled"
+          type="checkbox"
+          style="transform:scale(1.1); accent-color:var(--orange);"
+        />
+        启用朗读
+      </label>
+      <select v-model="speechStore.selectedVoice" class="select">
+        <option v-for="voice in speechStore.voices" :key="voice.name" :value="voice.name">
+          {{ voice.name }} ({{ voice.lang }})
+        </option>
+      </select>
+    </div>
+
+    <hr style="border:none;border-top:2px dashed var(--border)" />
+
+    <HistoryList />
+  </aside>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+import { useConfigStore } from '@/stores/config'
+import { useSpeechStore } from '@/stores/speech'
+import HistoryList from './HistoryList.vue'
+
+const configStore = useConfigStore()
+const speechStore = useSpeechStore()
+
+function saveConfig() {
+  configStore.saveConfig()
+  alert('配置已保存！')
+}
+
+const statusText = computed(() => {
+  return configStore.apiReachable 
+    ? `API 模式（${configStore.apiModel}）`
+    : '演示模式'
+})
+
+const statusClass = computed(() => {
+  return configStore.apiReachable ? 'success' : 'muted'
+})
+</script>
+
