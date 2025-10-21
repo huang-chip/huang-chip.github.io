@@ -1,5 +1,16 @@
 <template>
-  <aside class="side" aria-label="设置">
+  <!-- 移动端背景遮罩 - 始终存在，通过 show class 控制显示 -->
+  <div 
+    class="backdrop" 
+    :class="{ 'show': configStore.isMobile && configStore.sidebarOpen }"
+    @click="configStore.closeSidebar"
+  ></div>
+  
+  <aside 
+    class="side" 
+    :class="{ 'drawer': configStore.isMobile, 'show': configStore.isMobile && configStore.sidebarOpen }"
+    aria-label="设置"
+  >
     <div class="panel-title">连接大模型</div>
     <div class="setting">
       <label>API 地址</label>
@@ -18,11 +29,11 @@
       />
       
       <label>模型名</label>
-      <input
-        v-model="configStore.apiModel"
-        class="input"
-        placeholder="deepseek-chat"
-      />
+      <select v-model="configStore.apiModel" class="select">
+        <option v-for="model in configStore.availableModels" :key="model.value" :value="model.value">
+          {{ model.label }}
+        </option>
+      </select>
       
       <button class="btn" @click="saveConfig">保存配置</button>
       
@@ -58,7 +69,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useConfigStore } from '@/stores/config'
 import { useSpeechStore } from '@/stores/speech'
 import HistoryList from './HistoryList.vue'
@@ -79,6 +90,21 @@ const statusText = computed(() => {
 
 const statusClass = computed(() => {
   return configStore.apiReachable ? 'success' : 'muted'
+})
+
+// ESC 键关闭侧边栏
+function handleKeydown(event) {
+  if (event.key === 'Escape' && configStore.sidebarOpen) {
+    configStore.closeSidebar()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
 })
 </script>
 

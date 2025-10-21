@@ -13,9 +13,18 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import SidebarPanel from './components/SidebarPanel.vue'
 import ChatArea from './components/ChatArea.vue'
 import MessageInput from './components/MessageInput.vue'
+import { useConfigStore } from './stores/config'
+
+const configStore = useConfigStore()
+
+// 初始化移动端检测
+onMounted(() => {
+  configStore.initMobileDetection()
+})
 </script>
 

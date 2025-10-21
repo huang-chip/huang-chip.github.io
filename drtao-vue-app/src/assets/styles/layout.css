@@ -101,6 +101,64 @@
   
   .doc{
     flex-direction: column;
+    flex:1;
+  }
+  
+  /* 移动端设置按钮样式 */
+  .mobile-settings-btn {
+    order: -1; /* 让设置按钮在清空对话按钮前面 */
+  }
+}
+
+/* 移动端抽屉效果 */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 90;
+}
+
+.backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.side.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 78%;
+  max-width: 320px;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  border-right: 2px solid var(--border);
+  background: linear-gradient(180deg, #FFF9ED 0%, #FFF3D6 100%);
+}
+
+.side.drawer.show {
+  transform: translateX(0);
+}
+
+/* 桌面端隐藏抽屉相关样式 */
+@media (min-width: 861px) {
+  .backdrop {
+    display: none;
+  }
+  
+  .side.drawer {
+    position: static;
+    transform: none;
+    width: 260px;
+    max-width: none;
+    border-right: 2px solid var(--border);
   }
 }
 

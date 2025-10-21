@@ -25,12 +25,16 @@ export function useLLMApi() {
         messages: [
           { 
             role: 'system', 
-            content: '你是"小淘博士"，面向8-16岁青少年的科普助教。用简洁、友好、比喻+例子的方式回答科学问题。' 
+            content: '你是"小淘博士"，面向8-16岁青少年的科普助教。用简洁、友好、比喻+例子的方式回答科学问题。要求：1) 先给出直接答案；2) 再用2-4句话解释原因；3) 如合适，附上1-2条延伸思考；4) 保持积极、鼓励的语气；5) 避免成人黑话与缩写，数学/物理公式尽量简化。' 
           },
           { role: 'user', content: userMessage }
         ],
         stream: true,  // 开启流式响应
-        temperature: 0.7
+        temperature: 0.7,  // 采样温度
+        max_tokens: 2000,  // 最大生成token数
+        top_p: 1,  // 核采样参数
+        presence_penalty: 0,  // 存在惩罚
+        frequency_penalty: 0  // 频率惩罚
       })
     })
     
