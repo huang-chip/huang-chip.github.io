@@ -1,91 +1,70 @@
-# 小淘博士 - Vue 3 版本
+# 小淘博士 PWA 应用
 
-面向青少年的知识科普问答系统，基于 Vue 3 + Vite + Pinia 构建。
+这是一个基于Vue 3的PWA（渐进式Web应用），提供知识科普问答功能。
 
-## 特性
+## 功能特性
 
-- ✅ Vue 3 Composition API
-- ✅ Pinia 状态管理
-- ✅ 流式 LLM API 调用（实时响应）
-- ✅ 历史记录管理（可删除）
-- ✅ Markdown 渲染（vue-renderer-markdown）
-- ✅ 语音朗读（Web Speech API）
-- ✅ PWA 支持
-- ✅ 响应式设计
+- 🎯 面向青少年的知识科普问答
+- 🗣️ 支持文字和语音交互
+- 📱 PWA支持，可安装到手机桌面
+- 🔄 离线缓存，网络不佳时也能使用
+- 🎨 响应式设计，适配各种设备
 
-## 快速开始
-
-### 1. 安装依赖
+## 本地开发
 
 ```bash
+# 安装依赖
 npm install
-```
 
-### 2. 配置环境变量
-
-复制 `.env.example` 为 `.env.local` 并填写配置：
-
-```env
-VITE_PROXY_TARGET=https://api.deerapi.com
-VITE_API_BASE=https://your-worker.workers.dev
-VITE_DEFAULT_MODEL=deepseek-chat
-```
-
-### 3. 运行开发服务器
-
-```bash
+# 启动开发服务器
 npm run dev
+
+# 构建生产版本
+npm run build
+
+# 预览生产版本
+npm run preview
 ```
 
-访问 http://localhost:5173
+## PWA部署到GitHub Pages
 
-### 4. 构建生产版本
+### 自动部署（推荐）
+
+1. 确保GitHub仓库已启用GitHub Pages
+2. 推送代码到main分支，GitHub Actions会自动构建并部署
+
+### 手动部署
 
 ```bash
-npm run build
+# 安装依赖
+npm install
+
+# 构建并部署到GitHub Pages
+npm run deploy
 ```
 
-## 目录结构
+## PWA功能
 
-```
-drtao-vue-app/
-├── src/
-│   ├── components/     # Vue 组件
-│   ├── stores/         # Pinia 状态管理
-│   ├── composables/    # 组合式函数
-│   ├── assets/         # 样式和资源
-│   ├── App.vue         # 根组件
-│   └── main.js         # 入口文件
-├── public/             # 静态资源
-├── vite.config.js      # Vite 配置
-└── package.json
-```
+- **可安装**：在支持的浏览器中，用户可以点击地址栏的安装按钮将应用添加到桌面
+- **离线访问**：通过Service Worker缓存资源，离线时也能使用基础功能
+- **全屏显示**：安装后打开无浏览器地址栏，体验接近原生App
+- **自动更新**：应用会自动检测并更新到最新版本
 
-## 配置说明
+## 浏览器支持
 
-### Vite Proxy（开发环境）
+- ✅ Chrome/Edge (Android/Desktop)
+- ✅ Firefox (Android/Desktop)  
+- ✅ Safari (iOS/macOS) - 基础功能支持
+- ✅ Samsung Internet
 
-开发环境使用 Vite Proxy 解决跨域问题，配置在 `vite.config.js` 中。
+## 技术栈
 
-### Cloudflare Workers（生产环境）
+- Vue 3 + Composition API
+- Pinia (状态管理)
+- Vite (构建工具)
+- Vite PWA Plugin (PWA支持)
+- Workbox (Service Worker)
 
-生产环境需要部署 Cloudflare Workers 代理，参考 `重构为Vite项目规划.md` 中的配置。
+## 许可证
 
-## 功能说明
-
-### 历史记录
-
-- 保存在 localStorage
-- 每条记录可单独删除
-- 点击加载历史对话
-
-### API 调用
-
-- 支持流式实时响应
-- 开发/生产环境自动切换
-- 本地演示模式
-
-## License
-
-MIT
-
+MIT License
