@@ -69,6 +69,7 @@
 .chat{
   flex:1; 
   padding:14px; 
+  max-height: 80vh;
   overflow:auto; 
   background:linear-gradient(180deg,#FFFDF6 0%, #FFF8E6 100%);
 }

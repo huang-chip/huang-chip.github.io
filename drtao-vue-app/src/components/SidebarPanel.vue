@@ -72,13 +72,21 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
 import { useConfigStore } from '@/stores/config'
 import { useSpeechStore } from '@/stores/speech'
 import HistoryList from './HistoryList.vue'
 
 const configStore = useConfigStore()
 const speechStore = useSpeechStore()
+
+// 监听语音开关状态变化
+watch(() => speechStore.enabled, (newValue, oldValue) => {
+  // 当从启用变为禁用时，停止当前语音
+  if (oldValue === true && newValue === false) {
+    speechStore.stopSpeech()
+  }
+})
 
 function saveConfig() {
   configStore.saveConfig()

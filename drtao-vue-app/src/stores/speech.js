@@ -50,11 +50,19 @@ export const useSpeechStore = defineStore('speech', () => {
     speechSynthesis.speak(utterance)
   }
   
+  // 停止语音朗读
+  function stopSpeech() {
+    if ('speechSynthesis' in window) {
+      speechSynthesis.cancel()
+    }
+  }
+  
   return {
     enabled,
     voices,
     selectedVoice,
     speak,
+    stopSpeech,
     loadVoices,
     initSpeech
   }
