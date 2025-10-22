@@ -175,6 +175,10 @@
   padding-left: 1rem;
 }
 
+.bubble ul{
+  padding-left: 1rem;
+}
+
 .bubble a{
   color: var(--orange);
   text-decoration: none;
