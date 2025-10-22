@@ -11,24 +11,37 @@ export const useConfigStore = defineStore('config', () => {
   // 初始化配置
   function initConfig() {
     try {
-      apiBase.value = localStorage.getItem('api_base') || 
+      // 优先级：部署平台环境变量 > localStorage > .env文件 > 默认值
+      apiBase.value = 
         import.meta.env.VITE_LLM_API_URL || 
+        localStorage.getItem('api_base') || 
         ''
       
-      apiKey.value = localStorage.getItem('api_key') || 
+      apiKey.value = 
         import.meta.env.VITE_LLM_API_KEY || 
+        localStorage.getItem('api_key') || 
         ''
       
-      apiModel.value = localStorage.getItem('api_model') || 
+      apiModel.value = 
         import.meta.env.VITE_LLM_DEFAULT_MODEL || 
+        localStorage.getItem('api_model') || 
         'deepseek-chat'
       
-      console.log(`apiBase:${apiBase.value}`)
-      console.log(`apiKey:${apiKey.value}`)
-      console.log(`apiModel:${apiModel.value}`)
+      // 调试信息
+      console.log('=== 配置初始化 ===')
+      console.log(`API Base: ${apiBase.value ? '已配置' : '未配置'}`)
+      console.log(`API Key: ${apiKey.value ? '已配置' : '未配置'}`)
+      console.log(`API Model: ${apiModel.value}`)
+      console.log(`配置来源: ${import.meta.env.VITE_LLM_API_URL ? '环境变量' : localStorage.getItem('api_base') ? 'localStorage' : '默认值'}`)
       
       // 检查配置是否完整
       apiReachable.value = !!(apiBase.value && apiKey.value && apiModel.value)
+      
+      if (apiReachable.value) {
+        console.log('✅ API配置完整，可以正常使用')
+      } else {
+        console.warn('⚠️ API配置不完整，请检查环境变量或localStorage')
+      }
     } catch (error) {
       console.error('Failed to initialize config:', error)
     }

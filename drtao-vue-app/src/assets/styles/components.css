@@ -171,6 +171,10 @@
   font-size: 13px;
 }
 
+.bubble ol{
+  padding-left: 1rem;
+}
+
 .bubble a{
   color: var(--orange);
   text-decoration: none;
