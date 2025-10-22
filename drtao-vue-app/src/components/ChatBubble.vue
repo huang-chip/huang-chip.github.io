@@ -4,7 +4,11 @@
       <img src="/ui1.jpg" alt="bot" />
     </div>
     <div class="bubble" :class="{ me: isUser }">
-      <MarkdownRender v-if="message.content" :content="message.content" :render-code-blocks-as-pre="true"/>
+      <MarkdownRender 
+        v-if="message.content&&message.content.trim()!=''" 
+        :content="message.content" 
+        :render-code-blocks-as-pre="true"
+      />
       <div v-else-if="!isUser" class="typing-indicator">
         <span></span>
         <span></span>
