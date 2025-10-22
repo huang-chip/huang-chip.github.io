@@ -15,12 +15,12 @@ export const useConfigStore = defineStore('config', () => {
       apiBase.value = 
         import.meta.env.VITE_LLM_API_URL || 
         localStorage.getItem('api_base') || 
-        ''
+        'https://api.deepseek.com'
       
       apiKey.value = 
         import.meta.env.VITE_LLM_API_KEY || 
         localStorage.getItem('api_key') || 
-        ''
+        'sk-e909141ca97c45e79c47f59ebd698015'
       
       apiModel.value = 
         import.meta.env.VITE_LLM_DEFAULT_MODEL || 

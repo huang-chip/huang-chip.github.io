@@ -11,40 +11,41 @@
     :class="{ 'drawer': configStore.isMobile, 'show': configStore.isMobile && configStore.sidebarOpen }"
     aria-label="设置"
   >
-    <div class="panel-title">连接大模型</div>
-    <div class="setting">
-      <label>API 地址</label>
-      <input
-        v-model="configStore.apiBase"
-        class="input"
-        placeholder="如 https://api.openai.com/v1"
-      />
-      
-      <label>API Key（保存在浏览器本地）</label>
-      <input
-        v-model="configStore.apiKey"
-        class="input"
-        type="password"
-        placeholder="sk-..."
-      />
-      
-      <label>模型名</label>
-      <select v-model="configStore.apiModel" class="select">
-        <option v-for="model in configStore.availableModels" :key="model.value" :value="model.value">
-          {{ model.label }}
-        </option>
-      </select>
-      
-      <button class="btn" @click="saveConfig">保存配置</button>
-      
-      <div class="hint">未设置即本地演示；配置后走 API。</div>
-      <div class="status" :class="statusClass">
-        {{ statusText }}
+    <div v-show="false">
+      <div class="panel-title">连接大模型</div>
+      <div class="setting">
+        <label>API 地址</label>
+        <input
+          v-model="configStore.apiBase"
+          class="input"
+          placeholder="如 https://api.openai.com/v1"
+        />
+        
+        <label>API Key（保存在浏览器本地）</label>
+        <input
+          v-model="configStore.apiKey"
+          class="input"
+          type="password"
+          placeholder="sk-..."
+        />
+        
+        <label>模型名</label>
+        <select v-model="configStore.apiModel" class="select">
+          <option v-for="model in configStore.availableModels" :key="model.value" :value="model.value">
+            {{ model.label }}
+          </option>
+        </select>
+        
+        <button class="btn" @click="saveConfig">保存配置</button>
+        
+        <div class="hint">未设置即本地演示；配置后走 API。</div>
+        <div class="status" :class="statusClass">
+          {{ statusText }}
+        </div>
       </div>
+
+      <hr style="border:none;border-top:2px dashed var(--border)" />
     </div>
-
-    <hr style="border:none;border-top:2px dashed var(--border)" />
-
     <div class="panel-title">语音设置</div>
     <div class="setting">
       <label style="display:flex;align-items:center;gap:6px">
@@ -55,11 +56,13 @@
         />
         启用朗读
       </label>
-      <select v-model="speechStore.selectedVoice" class="select">
-        <option v-for="voice in speechStore.voices" :key="voice.name" :value="voice.name">
-          {{ voice.name }} ({{ voice.lang }})
-        </option>
-      </select>
+      <div v-show="false">
+        <select v-model="speechStore.selectedVoice" class="select">
+          <option v-for="voice in speechStore.voices" :key="voice.name" :value="voice.name">
+            {{ voice.name }} ({{ voice.lang }})
+          </option>
+        </select>
+      </div>
     </div>
 
     <hr style="border:none;border-top:2px dashed var(--border)" />
