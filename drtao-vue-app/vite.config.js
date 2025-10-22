@@ -78,6 +78,6 @@ export default defineConfig({
       }
     }
   },
-  base: process.env.NODE_ENV === 'production' ? '/huang-chip.github.io/' : '/'
+  base: '/'
 })
 

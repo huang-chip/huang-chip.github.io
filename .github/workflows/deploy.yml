@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'drtao-vue-app/**' # 只有子项目代码变化时才触发
   pull_request:
     branches: [ main ]
 
@@ -31,10 +33,31 @@ jobs:
         cd drtao-vue-app
         npm run build
         
+    - name: Copy build files to root
+      run: |
+        # 清理根目录的旧文件（保留docs文件夹）
+        rm -f ./index.html ./favicon.ico ./manifest.webmanifest
+        rm -rf ./assets ./js ./css ./sw.js ./workbox-*.js ./registerSW.js
+        rm -f ./pwa-*.png ./ui1.jpg
+        
+        # 复制构建产物到根目录
+        cp -r ./drtao-vue-app/dist/* ./
+        
+        # 创建.nojekyll文件以禁用Jekyll
+        touch .nojekyll
+        
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./drtao-vue-app/dist
-        cname: huang-chip.github.io
+        commit_message: "Auto deploy PWA from drtao-vue-app/dist to root"
+        file_pattern: |
+          index.html
+          favicon.ico
+          manifest.webmanifest
+          assets/
+          pwa-*.png
+          ui1.jpg
+          sw.js
+          workbox-*.js
+          registerSW.js
+          .nojekyll
