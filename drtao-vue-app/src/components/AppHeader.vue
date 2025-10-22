@@ -18,7 +18,7 @@
       >
         设置
       </button>
-      <button class="btn secondary" @click="clearChat">清空对话</button>
+      <button class="btn secondary" @click="createNewSession">新增会话</button>
     </div>
   </header>
 </template>
@@ -30,9 +30,11 @@ import { useConfigStore } from '@/stores/config'
 const chatStore = useChatStore()
 const configStore = useConfigStore()
 
-function clearChat() {
-  if (confirm('确认清空当前对话？')) {
-    chatStore.clearMessages()
+function createNewSession() {
+  if (chatStore.messages.length > 0 && confirm('确认创建新会话？当前会话将自动保存到历史记录。')) {
+    chatStore.createNewSession()
+  } else if (chatStore.messages.length === 0) {
+    chatStore.createNewSession()
   }
 }
 </script>

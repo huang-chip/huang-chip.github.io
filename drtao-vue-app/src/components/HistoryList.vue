@@ -11,7 +11,7 @@
           <div class="history-title">{{ history.title }}</div>
           <div class="history-time">{{ formatTime(history.timestamp) }}</div>
         </div>
-        <button class="btn-delete" @click.stop="deleteHistory(history.id)">
+        <button class="btn-delete" @click.stop="deleteHistory(history.id)" title="删除会话">
           删除
         </button>
       </div>
@@ -19,9 +19,6 @@
         暂无历史记录
       </div>
     </div>
-    <button v-if="chatStore.messages.length > 0" class="btn" @click="saveCurrentChat">
-      保存当前对话
-    </button>
   </div>
 </template>
 
@@ -42,10 +39,6 @@ function deleteHistory(id) {
   }
 }
 
-function saveCurrentChat() {
-  chatStore.saveToHistory()
-  alert('对话已保存到历史记录！')
-}
 
 function formatTime(timestamp) {
   return new Date(timestamp).toLocaleString('zh-CN', {
@@ -98,17 +91,23 @@ function formatTime(timestamp) {
 }
 
 .btn-delete {
-  padding: 4px 8px;
+  padding: 6px;
   font-size: 12px;
-  background: var(--danger);
-  color: #fff;
+  color: #dc2626;
+  background-color: transparent;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
 }
 
 .btn-delete:hover {
-  opacity: 0.8;
+  transform: scale(1.05);
 }
 </style>
 
