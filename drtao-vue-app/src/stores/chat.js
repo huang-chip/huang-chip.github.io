@@ -5,8 +5,18 @@ export const useChatStore = defineStore('chat', () => {
   // 当前会话消息列表
   const messages = ref([])
   
-  // 历史记录列表（从 localStorage 加载）
-  const histories = ref(JSON.parse(localStorage.getItem('chat_histories') || '[]'))
+  // 历史记录列表（延迟加载）
+  const histories = ref([])
+  
+  // 初始化历史记录
+  function initHistories() {
+    try {
+      histories.value = JSON.parse(localStorage.getItem('chat_histories') || '[]')
+    } catch (error) {
+      console.error('Failed to load chat histories:', error)
+      histories.value = []
+    }
+  }
   
   // 添加消息
   function addMessage(role, content) {
@@ -63,7 +73,8 @@ export const useChatStore = defineStore('chat', () => {
     saveToHistory,
     deleteHistory,
     loadHistory,
-    clearMessages
+    clearMessages,
+    initHistories
   }
 })
 

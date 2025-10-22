@@ -20,6 +20,14 @@ export const useSpeechStore = defineStore('speech', () => {
     }
   }
   
+  // 初始化语音功能
+  function initSpeech() {
+    if ('speechSynthesis' in window) {
+      speechSynthesis.onvoiceschanged = loadVoices
+      loadVoices()
+    }
+  }
+  
   // 朗读文本
   function speak(text) {
     if (!('speechSynthesis' in window) || !enabled.value) return
@@ -42,17 +50,13 @@ export const useSpeechStore = defineStore('speech', () => {
     speechSynthesis.speak(utterance)
   }
   
-  // 初始化
-  if ('speechSynthesis' in window) {
-    speechSynthesis.onvoiceschanged = loadVoices
-    loadVoices()
-  }
-  
   return {
     enabled,
     voices,
     selectedVoice,
-    speak
+    speak,
+    loadVoices,
+    initSpeech
   }
 })
 

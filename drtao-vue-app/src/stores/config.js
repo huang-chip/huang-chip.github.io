@@ -2,29 +2,37 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useConfigStore = defineStore('config', () => {
-  // 从环境变量读取默认值
-  const apiBase = ref(
-    localStorage.getItem('api_base') || 
-    import.meta.env.VITE_LLM_API_URL || 
-    ''
-  )
-  
-  const apiKey = ref(
-    localStorage.getItem('api_key') || 
-    import.meta.env.VITE_LLM_API_KEY || 
-    ''
-  )
-  
-  const apiModel = ref(
-    localStorage.getItem('api_model') || 
-    import.meta.env.VITE_LLM_DEFAULT_MODEL || 
-    'deepseek-chat'
-  )
-  console.log(`apiBase:${apiBase.value}`)
-  console.log(`apiKey:${apiKey.value}`)
-  console.log(`apiModel:${apiModel.value}`)
-  
+  // 配置项（延迟初始化）
+  const apiBase = ref('')
+  const apiKey = ref('')
+  const apiModel = ref('deepseek-chat')
   const apiReachable = ref(false)
+  
+  // 初始化配置
+  function initConfig() {
+    try {
+      apiBase.value = localStorage.getItem('api_base') || 
+        import.meta.env.VITE_LLM_API_URL || 
+        ''
+      
+      apiKey.value = localStorage.getItem('api_key') || 
+        import.meta.env.VITE_LLM_API_KEY || 
+        ''
+      
+      apiModel.value = localStorage.getItem('api_model') || 
+        import.meta.env.VITE_LLM_DEFAULT_MODEL || 
+        'deepseek-chat'
+      
+      console.log(`apiBase:${apiBase.value}`)
+      console.log(`apiKey:${apiKey.value}`)
+      console.log(`apiModel:${apiModel.value}`)
+      
+      // 检查配置是否完整
+      apiReachable.value = !!(apiBase.value && apiKey.value && apiModel.value)
+    } catch (error) {
+      console.error('Failed to initialize config:', error)
+    }
+  }
   
   // 常用模型列表
   const availableModels = ref([
@@ -46,10 +54,6 @@ export const useConfigStore = defineStore('config', () => {
     apiReachable.value = !!(apiBase.value && apiKey.value && apiModel.value)
   }
   
-  // 初始化时检查配置
-  if (apiBase.value && apiKey.value && apiModel.value) {
-    apiReachable.value = true
-  }
 
   // 移动端检测和状态管理
   const isMobile = ref(false)
@@ -99,6 +103,7 @@ export const useConfigStore = defineStore('config', () => {
     isMobile,
     sidebarOpen,
     saveConfig,
+    initConfig,
     checkMobile,
     toggleSidebar,
     closeSidebar,

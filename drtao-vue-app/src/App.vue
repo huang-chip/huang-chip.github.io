@@ -19,12 +19,19 @@ import SidebarPanel from './components/SidebarPanel.vue'
 import ChatArea from './components/ChatArea.vue'
 import MessageInput from './components/MessageInput.vue'
 import { useConfigStore } from './stores/config'
+import { useChatStore } from './stores/chat'
+import { useSpeechStore } from './stores/speech'
 
 const configStore = useConfigStore()
+const chatStore = useChatStore()
+const speechStore = useSpeechStore()
 
-// 初始化移动端检测
+// 初始化所有store
 onMounted(() => {
+  configStore.initConfig()
   configStore.initMobileDetection()
+  chatStore.initHistories()
+  speechStore.initSpeech()
 })
 </script>
 
