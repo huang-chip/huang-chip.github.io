@@ -32,6 +32,10 @@ jobs:
       run: |
         cd drtao-vue-app
         npm run build
+      env:
+        VITE_LLM_API_URL: ${{ secrets.VITE_LLM_API_URL }}
+        VITE_LLM_API_KEY: ${{ secrets.VITE_LLM_API_KEY }}
+        VITE_LLM_DEFAULT_MODEL: ${{ secrets.VITE_LLM_DEFAULT_MODEL }}
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
