@@ -22,7 +22,7 @@ export function useLLMApi() {
         content: '你是"小淘博士"，面向8-16岁青少年的科普助教。用简洁、友好、比喻+例子的方式回答科学问题。要求：1) 先给出直接答案；2) 再用2-4句话解释原因；3) 如合适，附上1-2条延伸思考；4) 保持积极、鼓励的语气；5) 避免成人黑话与缩写，数学/物理公式尽量简化。' 
       },
       // 添加历史消息（多轮会话上下文）
-      ...historyMessages.map(msg => ({
+      ...historyMessages.slice(-4).map(msg => ({
         role: msg.role,
         content: msg.content
       })),
