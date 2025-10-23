@@ -7,12 +7,28 @@ export function useLLMApi() {
    * 调用 LLM API（支持流式实时响应）
    * @param {string} userMessage 用户消息
    * @param {Function} onChunk 实时回调函数
+   * @param {Array} historyMessages 历史消息数组
    */
-  async function callLLMStream(userMessage, onChunk) {
+  async function callLLMStream(userMessage, onChunk, historyMessages = []) {
     const isDev = import.meta.env.DEV
     // 开发环境走代理，生产环境走 Cloudflare Workers
     const baseUrl = isDev ? '/api' : configStore.apiBase
     const url = `${baseUrl}/chat/completions`
+    
+    // 构造完整的消息数组
+    const messages = [
+      { 
+        role: 'system', 
+        content: '你是"小淘博士"，面向8-16岁青少年的科普助教。用简洁、友好、比喻+例子的方式回答科学问题。要求：1) 先给出直接答案；2) 再用2-4句话解释原因；3) 如合适，附上1-2条延伸思考；4) 保持积极、鼓励的语气；5) 避免成人黑话与缩写，数学/物理公式尽量简化。' 
+      },
+      // 添加历史消息（多轮会话上下文）
+      ...historyMessages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      })),
+      // 当前用户消息
+      { role: 'user', content: userMessage }
+    ]
     
     const response = await fetch(url, {
       method: 'POST',
@@ -22,13 +38,7 @@ export function useLLMApi() {
       },
       body: JSON.stringify({
         model: configStore.apiModel,
-        messages: [
-          { 
-            role: 'system', 
-            content: '你是"小淘博士"，面向8-16岁青少年的科普助教。用简洁、友好、比喻+例子的方式回答科学问题。要求：1) 先给出直接答案；2) 再用2-4句话解释原因；3) 如合适，附上1-2条延伸思考；4) 保持积极、鼓励的语气；5) 避免成人黑话与缩写，数学/物理公式尽量简化。' 
-          },
-          { role: 'user', content: userMessage }
-        ],
+        messages,
         stream: true,  // 开启流式响应
         temperature: 0.7,  // 采样温度
         max_tokens: 2000,  // 最大生成token数

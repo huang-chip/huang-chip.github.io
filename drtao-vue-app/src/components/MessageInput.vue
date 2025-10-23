@@ -45,10 +45,13 @@ async function sendMessage() {
     const useApi = chatStore.messages.length > 1 // 简化判断
     
     if (useApi) {
+      // 获取历史消息（排除当前用户消息和即将添加的AI消息）
+      const historyMessages = chatStore.messages.slice(0, -1) // 排除刚添加的用户消息
+      
       // 流式调用 API
       await callLLMStream(text, (chunk) => {
         chatStore.messages[aiMessageIndex].content += chunk
-      })
+      }, historyMessages)
     } else {
       // 本地知识库
       const answer = localAnswer(text)
