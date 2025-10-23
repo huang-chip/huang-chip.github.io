@@ -14,9 +14,25 @@
     <meta name="apple-mobile-web-app-title" content="小淘博士" />
     <link rel="apple-touch-icon" href="/pwa-192x192.png" />
     
+    <!-- iOS Safari PWA支持 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    
+    <!-- Android Chrome PWA支持 -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="小淘博士" />
+    
+    <!-- Microsoft Edge PWA支持 -->
+    <meta name="msapplication-TileColor" content="#FFA726" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    
     <!-- 防止页面缩放 -->
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
+    
+    <!-- 安全策略 -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <script type="module" crossorigin src="/assets/index-4KnQCrBZ.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BEeuRf9u.css">
   <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
