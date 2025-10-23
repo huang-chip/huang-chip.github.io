@@ -15,6 +15,11 @@ export const useChatStore = defineStore('chat', () => {
   function initHistories() {
     try {
       histories.value = JSON.parse(localStorage.getItem('chat_histories') || '[]')
+      
+      // 如果没有任何历史记录，添加欢迎消息
+      if (histories.value.length === 0 && messages.value.length === 0) {
+        addMessage('assistant', '你好，我是小淘博士。有什么可以帮助你的吗？')
+      }
     } catch (error) {
       console.error('Failed to load chat histories:', error)
       histories.value = []

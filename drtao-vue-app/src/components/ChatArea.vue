@@ -83,10 +83,7 @@ watch(() => chatStore.messages, () => {
 }, { deep: true })
 
 onMounted(() => {
-  // 只有在没有任何历史记录且当前消息为空时才添加欢迎消息
-  if (chatStore.messages.length === 0 && chatStore.histories.length === 0) {
-    chatStore.addMessage('assistant', '你好，我是小淘博士。有什么可以帮助你的吗？')
-  }
+  // 组件挂载时不需要添加欢迎消息，由store统一管理
 })
 </script>
 
