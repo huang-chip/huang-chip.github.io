@@ -175,6 +175,19 @@
   padding-left: 1rem;
 }
 
+.bubble del{
+  text-decoration: none;
+  position: relative;
+}
+.bubble del::before {
+  content: "~";
+  color: var(--muted);
+  margin-right: 2px;
+  font-weight: bold;
+  position: relative;
+  top: -1px;
+}
+
 .bubble ul{
   padding-left: 1rem;
 }
