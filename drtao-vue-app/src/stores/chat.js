@@ -11,6 +11,9 @@ export const useChatStore = defineStore('chat', () => {
   // 历史记录列表（延迟加载）
   const histories = ref([])
   
+  // 是否已经添加欢迎消息
+  const isWelcomeMessageAdded = ref(false)
+  
   // 初始化历史记录
   function initHistories() {
     try {
@@ -19,6 +22,9 @@ export const useChatStore = defineStore('chat', () => {
       // 如果没有任何历史记录，添加欢迎消息
       if (histories.value.length === 0 && messages.value.length === 0) {
         addMessage('assistant', '你好，我是小淘博士。有什么可以帮助你的吗？')
+      }else if(isWelcomeMessageAdded.value){
+        addMessage('assistant', '你好，我是小淘博士。有什么可以帮助你的吗？')
+        isWelcomeMessageAdded.value = false
       }
     } catch (error) {
       console.error('Failed to load chat histories:', error)
