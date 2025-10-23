@@ -24,62 +24,86 @@ import ChatBubble from './ChatBubble.vue'
 const chatStore = useChatStore()
 const chatContainer = ref(null)
 
-// 用户滚动状态管理
+// 简化的滚动状态管理
 const isUserScrolling = ref(false)
 const scrollTimeout = ref(null)
-const shouldAutoScroll = ref(true)
 
 // 检查是否在底部
 function isAtBottom() {
   if (!chatContainer.value) return false
   const { scrollTop, scrollHeight, clientHeight } = chatContainer.value
-  return scrollHeight - scrollTop - clientHeight < 10 // 10px 容差
+  return scrollHeight - scrollTop - clientHeight < 20 // 20px 容差
 }
 
-// 自动滚动到底部
+// 平滑滚动到底部
 function scrollToBottom() {
   if (!chatContainer.value) return
-  nextTick(() => {
-    chatContainer.value.scrollTop = chatContainer.value.scrollHeight
+  
+  requestAnimationFrame(() => {
+    if (chatContainer.value) {
+      chatContainer.value.scrollTo({
+        top: chatContainer.value.scrollHeight,
+        behavior: 'smooth'
+      })
+    }
   })
 }
 
 // 处理用户滚动事件
 function handleUserScroll() {
-  // 用户开始滚动
   isUserScrolling.value = true
-  shouldAutoScroll.value = isAtBottom()
   
   // 清除之前的定时器
   if (scrollTimeout.value) {
     clearTimeout(scrollTimeout.value)
   }
   
-  // 设置定时器，在用户停止滚动后重置状态
+  // 500ms后认为用户停止滚动
   scrollTimeout.value = setTimeout(() => {
     isUserScrolling.value = false
-    // 如果用户在底部，恢复自动滚动
-    if (isAtBottom()) {
-      shouldAutoScroll.value = true
-    }
-  }, 2000) // 2秒后认为用户停止滚动
+  }, 500)
 }
 
-// 处理新消息
+// 处理新消息滚动
 function handleNewMessage() {
-  if (!isUserScrolling.value && shouldAutoScroll.value) {
+  // 如果用户没有在滚动，或者用户在底部，则自动滚动
+  if (!isUserScrolling.value || isAtBottom()) {
     scrollToBottom()
   }
 }
 
-// 监听消息数量变化
-watch(() => chatStore.messages.length, () => {
-  handleNewMessage()
+// 强制滚动到底部（用于用户发送新消息时）
+function forceScrollToBottom() {
+  // 清空用户滚动状态
+  isUserScrolling.value = false
+  if (scrollTimeout.value) {
+    clearTimeout(scrollTimeout.value)
+    scrollTimeout.value = null
+  }
+  
+  // 强制滚动到底部
+  scrollToBottom()
+}
+
+// 监听消息数量变化（新消息添加）
+watch(() => chatStore.messages.length, (newLength, oldLength) => {
+  nextTick(() => {
+    // 如果有新消息且最后一条是用户消息，强制滚动
+    if (newLength > oldLength && chatStore.messages[newLength - 1]?.role === 'user') {
+      forceScrollToBottom()
+    } else {
+      handleNewMessage()
+    }
+  })
+  // console.log('消息数量变化,newLength', newLength, 'oldLength', oldLength)
 })
 
-// 监听消息内容变化（用于流式输出）
+// 监听消息内容变化（流式输出）
 watch(() => chatStore.messages, () => {
-  handleNewMessage()
+  nextTick(() => {
+    handleNewMessage()
+  })
+  // console.log('消息内容变化')
 }, { deep: true })
 
 onMounted(() => {

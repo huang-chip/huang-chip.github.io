@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+drtao-vue-app/dist
 dist-ssr
 *.local
 

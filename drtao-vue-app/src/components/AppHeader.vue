@@ -31,7 +31,8 @@ const chatStore = useChatStore()
 const configStore = useConfigStore()
 
 function createNewSession() {
-  if (chatStore.messages.length > 0 && confirm('确认创建新会话？当前会话将自动保存到历史记录。')) {
+  // if (chatStore.messages.length > 0 && confirm('确认创建新会话？当前会话将自动保存到历史记录。')) {
+  if (chatStore.messages.length > 0 ) {
     chatStore.createNewSession()
   } else if (chatStore.messages.length === 0) {
     chatStore.createNewSession()

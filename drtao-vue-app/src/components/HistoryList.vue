@@ -28,9 +28,9 @@ import { useChatStore } from '@/stores/chat'
 const chatStore = useChatStore()
 
 function loadHistory(id) {
-  if (confirm('加载历史记录将替换当前对话，确认继续？')) {
+  // if (confirm('加载历史记录将替换当前对话，确认继续？')) {
     chatStore.loadHistory(id)
-  }
+  // }
 }
 
 function deleteHistory(id) {
