@@ -114,6 +114,7 @@ export const useChatStore = defineStore('chat', () => {
     const history = histories.value.find(h => h.id === id)
     if (history) {
       messages.value = [...history.messages]
+      currentSessionId.value = id
     }
   }
   
