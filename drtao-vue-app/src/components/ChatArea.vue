@@ -107,7 +107,6 @@ watch(() => chatStore.messages, () => {
 }, { deep: true })
 
 onMounted(() => {
-  chatStore.isWelcomeMessageAdded = true
   // 组件挂载时不需要添加欢迎消息，由store统一管理
 })
 </script>

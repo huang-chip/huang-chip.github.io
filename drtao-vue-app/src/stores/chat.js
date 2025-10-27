@@ -19,12 +19,10 @@ export const useChatStore = defineStore('chat', () => {
     try {
       histories.value = JSON.parse(localStorage.getItem('chat_histories') || '[]')
       
-      // 如果没有任何历史记录，添加欢迎消息
-      if (histories.value.length === 0 && messages.value.length === 0) {
+      // 如果没有任何历史记录且是首次加载，添加欢迎消息
+      if (histories.value.length === 0 && messages.value.length === 0 && !isWelcomeMessageAdded.value) {
         addMessage('assistant', '你好，我是小淘博士。有什么可以帮助你的吗？')
-      }else if(isWelcomeMessageAdded.value){
-        addMessage('assistant', '你好，我是小淘博士。有什么可以帮助你的吗？')
-        isWelcomeMessageAdded.value = false
+        isWelcomeMessageAdded.value = true
       }
     } catch (error) {
       console.error('Failed to load chat histories:', error)
@@ -33,7 +31,7 @@ export const useChatStore = defineStore('chat', () => {
   }
   
   // 添加消息
-  function addMessage(role, content) {
+  function addMessage(role, content, autoSave = true) {
     const timestamp = Date.now()
     messages.value.push({ 
       role, 
@@ -47,7 +45,16 @@ export const useChatStore = defineStore('chat', () => {
     }
     
     // 自动保存/更新历史记录
-    autoSaveToHistory()
+    if (autoSave) {
+      autoSaveToHistory()
+    }
+  }
+  
+  // 更新最后一条消息的内容（用于流式输出）
+  function updateLastMessage(content) {
+    if (messages.value.length > 0) {
+      messages.value[messages.value.length - 1].content = content
+    }
   }
   
   // 自动保存/更新历史记录
@@ -148,6 +155,7 @@ export const useChatStore = defineStore('chat', () => {
     histories,
     currentSessionId,
     addMessage,
+    updateLastMessage,
     saveToHistory,
     deleteHistory,
     loadHistory,

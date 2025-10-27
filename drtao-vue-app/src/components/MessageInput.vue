@@ -37,9 +37,9 @@ async function sendMessage() {
   loading.value = true
 
   try {
-    // 添加空的 AI 消息（用于实时追加）
+    // 添加空的 AI 消息（用于实时追加，但不自动保存历史）
     const aiMessageIndex = chatStore.messages.length
-    chatStore.addMessage('assistant', '')
+    chatStore.addMessage('assistant', '', false)
 
     // 调用 LLM API 或本地知识库
     const useApi = chatStore.messages.length > 1 // 简化判断
@@ -58,6 +58,9 @@ async function sendMessage() {
       chatStore.messages[aiMessageIndex].content = answer
     }
 
+    // AI 响应完成后，保存历史会话
+    chatStore.saveToHistory()
+
     // 语音朗读
     if (speechStore.enabled) {
       speechStore.speak(chatStore.messages[aiMessageIndex].content)
@@ -66,6 +69,8 @@ async function sendMessage() {
     console.error('发送消息失败:', error)
     const lastIndex = chatStore.messages.length - 1
     chatStore.messages[lastIndex].content = '❌ 请求失败：' + error.message
+    // 即使失败也要保存历史
+    chatStore.saveToHistory()
   } finally {
     loading.value = false
   }
