@@ -32,11 +32,8 @@ const configStore = useConfigStore()
 
 function createNewSession() {
   // if (chatStore.messages.length > 0 && confirm('确认创建新会话？当前会话将自动保存到历史记录。')) {
-  if (chatStore.messages.length > 0 ) {
     chatStore.createNewSession()
-  } else if (chatStore.messages.length === 0) {
-    chatStore.createNewSession()
-  }
+    chatStore.addMessage('assistant', '你好，我是小淘博士，青少年智能科普问答助手，可以陪你畅聊各种知识和好奇的问题！')
 }
 </script>
 
