@@ -47,7 +47,7 @@
       <hr style="border:none;border-top:2px dashed var(--border)" />
     </div>
     <div class="panel-title">语音设置</div>
-    <div class="setting">
+    <div class="setting" style="display:flex;flex-direction:row;justify-content: space-between;">
       <label style="display:flex;align-items:center;gap:6px">
         <input
           v-model="speechStore.enabled"
@@ -56,6 +56,15 @@
         />
         启用朗读
       </label>
+      <label style="display:flex;align-items:center;gap:6px">
+        <input
+          v-model="configStore.deepThinkingEnabled"
+          type="checkbox"
+          style="transform:scale(1.1); accent-color:var(--orange);"
+        />
+        深度思考模式
+      </label>
+      <!-- 语音选择，暂时禁用 -->
       <div v-show="false">
         <select v-model="speechStore.selectedVoice" class="select">
           <option v-for="voice in speechStore.voices" :key="voice.name" :value="voice.name">
@@ -85,6 +94,20 @@ watch(() => speechStore.enabled, (newValue, oldValue) => {
   // 当从启用变为禁用时，停止当前语音
   if (oldValue === true && newValue === false) {
     speechStore.stopSpeech()
+  }
+})
+
+// 监听深度思考模式状态变化
+watch(() => configStore.deepThinkingEnabled, (newValue) => {
+  if (newValue) {
+    // 切换到深度思考模式时，保存当前模型并切换到 deepseek-reasoner
+    if (configStore.apiModel !== 'deepseek-reasoner') {
+      configStore.defaultApiModel = configStore.apiModel
+      configStore.apiModel = 'deepseek-reasoner'
+    }
+  } else {
+    // 取消深度思考模式时，恢复为默认模型
+    configStore.apiModel = configStore.defaultApiModel
   }
 })
 

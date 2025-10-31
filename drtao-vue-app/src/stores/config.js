@@ -7,6 +7,9 @@ export const useConfigStore = defineStore('config', () => {
   const apiKey = ref('')
   const apiModel = ref('deepseek-chat')
   const apiReachable = ref(false)
+  const deepThinkingEnabled = ref(false)
+  const defaultApiModel = ref('deepseek-chat')
+  const selectedSubjectPrompt = ref('')
   
   // 初始化配置
   function initConfig() {
@@ -22,10 +25,12 @@ export const useConfigStore = defineStore('config', () => {
         localStorage.getItem('api_key') || 
         'sk-e909141ca97c45e79c47f59ebd698015'
       
-      apiModel.value = 
+      const savedModel = 
         import.meta.env.VITE_LLM_DEFAULT_MODEL || 
         localStorage.getItem('api_model') || 
         'deepseek-chat'
+      defaultApiModel.value = savedModel
+      apiModel.value = savedModel
       
       // 调试信息
       console.log('=== 配置初始化 ===')
@@ -113,6 +118,9 @@ export const useConfigStore = defineStore('config', () => {
     apiModel, 
     apiReachable, 
     availableModels,
+    deepThinkingEnabled,
+    defaultApiModel,
+    selectedSubjectPrompt,
     isMobile,
     sidebarOpen,
     saveConfig,

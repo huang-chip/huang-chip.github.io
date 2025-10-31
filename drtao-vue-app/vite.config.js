@@ -90,7 +90,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://api.deerapi.com',
+        // target: 'https://api.deerapi.com',
+        target: 'https://api.deepseek.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/v1'),
         configure: (proxy, options) => {

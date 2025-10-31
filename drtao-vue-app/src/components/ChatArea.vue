@@ -7,19 +7,21 @@
     aria-label="聊天内容"
     @scroll="handleUserScroll"
   >
-    <ChatBubble
-      v-for="(message, index) in chatStore.messages"
-      :key="index"
-      :message="message"
-      :is-user="message.role === 'user'"
-    />
+  <SubjectBar/>
+  <ChatBubble
+    v-for="(message, index) in chatStore.messages"
+    :key="index"
+    :message="message"
+    :is-user="message.role === 'user'"
+  />
   </div>
 </template>
 
 <script setup>
-import { onMounted, nextTick, watch, ref } from 'vue'
+import { onMounted, nextTick, watch, ref, TrackOpTypes } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import ChatBubble from './ChatBubble.vue'
+import SubjectBar from './SubjectBar.vue'
 
 const chatStore = useChatStore()
 const chatContainer = ref(null)
