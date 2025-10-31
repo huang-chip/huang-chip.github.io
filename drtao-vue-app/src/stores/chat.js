@@ -33,6 +33,15 @@ export const useChatStore = defineStore('chat', () => {
   // 添加消息
   function addMessage(role, content, autoSave = true) {
     const timestamp = Date.now()
+    if (role === 'system') {
+      // 如果最后一条消息是introduce，则替换它，否则pass
+      const lastIndex = messages.value.length - 1
+      if (messages.value.length > 0 && messages.value[lastIndex].role === 'system') {
+        messages.value[lastIndex] = { role, content, timestamp }
+        return
+      }
+      // 否则继续正常添加
+    }
     messages.value.push({ 
       role, 
       content, 
