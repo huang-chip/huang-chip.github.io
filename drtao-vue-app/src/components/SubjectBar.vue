@@ -35,7 +35,7 @@ const subjects = [
 - 黑洞会把所有东西都吸进去吗？
 - 银河系有多大？
 - 宇宙是怎么诞生的？`,
-    emoji: '🛸'
+    emoji: '🪐'
     // 🪐👽🛸
   },
   {
@@ -166,6 +166,13 @@ function selectSubject(subject) {
   configStore.selectedSubjectPrompt = subject.prompt || ''
   //本来是introduce的，结果大模型不接受，只能用system类型
   chatStore.addMessage('system', subject.intro || '', false)
+  if(subject.text === '化学') {
+    let isconfirm = false
+    while (!isconfirm) {
+      isconfirm = confirm('化学实验可能包含危险操作，需家长或老师的陪同下进行，是否继续？')
+    }
+  }
+
 }
 </script>
 

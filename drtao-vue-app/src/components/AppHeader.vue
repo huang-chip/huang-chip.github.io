@@ -2,7 +2,8 @@
   <header class="header">
     <div class="brand">
       <div class="sunflower" aria-hidden="true">
-        <img src="/ui1.jpg" alt="logo" />
+        <!-- <img src="/ui1.jpg" alt="logo" /> -->
+        <img src="/avator-gif.gif" alt="bot" />
       </div>
       <h1 v-if="!configStore.isMobile">小淘博士 · 知识科普</h1>
       <h1 v-else>小淘博士</h1>
